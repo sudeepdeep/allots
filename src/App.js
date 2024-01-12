@@ -1,15 +1,51 @@
 import "./App.css";
-import Test from "./Test";
-import { Provider } from "react-redux";
-import { store } from "./utils/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AppLayout from "./Layout/AppLayout";
+import Home from "./pages/Home";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+
+      {
+        path: "/add",
+        element: <Home />,
+      },
+
+      {
+        path: "/public-feed",
+        element: <Home />,
+      },
+
+      {
+        path: "/full-profile",
+        element: <Home />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+]);
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Test />
-      </div>
-    </Provider>
+    <div className="font-poppins">
+      <RouterProvider router={appRouter} />
+    </div>
   );
 }
 
