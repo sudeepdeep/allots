@@ -13,6 +13,7 @@ import {
   ActiveAdd,
   ActivateProfileIcon,
 } from "../assets/Icons";
+import Logo from "./Logo";
 
 const menuLists = [
   {
@@ -51,6 +52,9 @@ const menuLists = [
 function Header() {
   return (
     <>
+      <h2 className="text-xl text-white font-bold tracking-widest hidden md:block">
+        <Logo />
+      </h2>
       {menuLists.map((item, index) => (
         <>
           <NavLink to={item.path}>
@@ -67,6 +71,10 @@ function Header() {
           </NavLink>
         </>
       ))}
+
+      <h2 className="text-sm text-white font-thin tracking-widest hidden md:block">
+        user
+      </h2>
     </>
   );
 }

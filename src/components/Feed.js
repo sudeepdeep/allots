@@ -16,7 +16,6 @@ function Feed({ isPublic = false, myPosts = false }) {
 
   const [page, setPage] = useState(1);
   const [items, setItems] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
 
   const { data, isLoading, refetch } = useQuery(
     ["feed-posts"],
@@ -133,7 +132,7 @@ function Feed({ isPublic = false, myPosts = false }) {
 
   return (
     <>
-      <div className="timeline  max-w-xl mx-auto my-10">
+      <div className="timeline  max-w-xl mx-auto">
         <>
           {items?.map((post, feedIndex) => (
             <>
