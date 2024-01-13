@@ -4,6 +4,9 @@ import AppLayout from "./Layout/AppLayout";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Profile from "./pages/Profile";
+import Bookings from "./pages/Bookings";
+import UploadPost from "./pages/UploadPost";
 
 const appRouter = createBrowserRouter([
   {
@@ -17,17 +20,17 @@ const appRouter = createBrowserRouter([
 
       {
         path: "/add",
-        element: <Home />,
+        element: <UploadPost />,
       },
 
       {
-        path: "/public-feed",
-        element: <Home />,
+        path: "/bookings",
+        element: <Bookings />,
       },
 
       {
-        path: "/full-profile",
-        element: <Home />,
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

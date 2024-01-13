@@ -36,13 +36,13 @@ const menuLists = [
   },
   {
     title: "Bookings",
-    path: "/public-feed",
+    path: "/bookings",
     icon: <ExploreIcon />,
     activeIcon: <ActivateExploreIcon />,
   },
   {
     title: "Profile",
-    path: `/full-profile`,
+    path: `/profile`,
     icon: <ProfileIcon />,
     activeIcon: <ActivateProfileIcon />,
   },
@@ -58,7 +58,7 @@ function Header() {
               <span
                 className={`itemMenu flex gap-2  ${
                   !isActive ? "text-white" : "text-[#c3073f]"
-                } font-medium uppercase tracking-widest w-[100%] cursor-pointer hover:text-[#c3073f]`}
+                }  uppercase tracking-widest w-[100%] cursor-pointer hover:text-[#c3073f]`}
               >
                 {isActive ? item.activeIcon : item.icon}
                 <span className="md:block hidden">{item.title}</span>
