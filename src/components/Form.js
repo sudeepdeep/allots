@@ -1,4 +1,5 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { ComboButton } from "./ComboButton";
 
 export default function Form() {
   return (
@@ -6,7 +7,7 @@ export default function Form() {
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-white">
-            Profile
+            Edit Profile
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             This information will be displayed publicly so be careful what you
@@ -408,20 +409,7 @@ export default function Form() {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="button"
-          className="text-sm font-semibold leading-6 text-white"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="rounded-md bg-[#c3073f] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#c3073f]/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
-      </div>
+      <ComboButton />
     </form>
   );
 }

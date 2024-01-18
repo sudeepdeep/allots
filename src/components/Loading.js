@@ -4,7 +4,7 @@ function Loading() {
   return (
     <>
       <div className="loading w-full h-[100vh] mt-10 bg-black flex flex-col gap-5 items-center justify-start">
-        <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full h-[250px] mx-auto">
+        <div className="border border-blue-300 shadow rounded-md p-4 w-full h-[250px] mx-auto">
           <div className="animate-pulse flex space-x-4">
             <div className="rounded-full bg-slate-700 h-10 w-10"></div>
             <div className="flex-1 space-y-6 py-1">
@@ -20,7 +20,7 @@ function Loading() {
           </div>
         </div>
 
-        <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full h-[250px] mx-auto">
+        <div className="border border-blue-300 shadow rounded-md p-4 w-full h-[250px] mx-auto">
           <div className="animate-pulse flex space-x-4">
             <div className="rounded-full bg-slate-700 h-10 w-10"></div>
             <div className="flex-1 space-y-6 py-1">
@@ -36,7 +36,7 @@ function Loading() {
           </div>
         </div>
 
-        <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full h-[250px] mx-auto">
+        <div className="border border-blue-300 shadow rounded-md p-4 w-full h-[250px] mx-auto">
           <div className="animate-pulse flex space-x-4">
             <div className="rounded-full bg-slate-700 h-10 w-10"></div>
             <div className="flex-1 space-y-6 py-1">

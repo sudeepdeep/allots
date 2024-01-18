@@ -1,5 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const uiSlice = createSlice({
+  name: "uislice",
+  initialState: {
+    scrollPosition: 0,
+  },
+  reducers: {
+    updatePosition: (state, action) => {
+      state.scrollPosition = action.payload;
+    },
+  },
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -28,4 +40,9 @@ const userSlice = createSlice({
 
 export const { addUser, removeUser, clearAllUsers } = userSlice.actions;
 
-export default userSlice.reducer;
+export const { updatePosition } = uiSlice.actions;
+
+export const reducers = {
+  ui: uiSlice.reducer,
+  user: userSlice.reducer,
+};
