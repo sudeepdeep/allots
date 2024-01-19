@@ -6,9 +6,6 @@ const token = Cookies.get("token");
 
 let axios = Axios.create({
   baseURL: process.env.REACT_APP_API_HOST,
-  headers: {
-    Authorization: token && `Bearer ${token}`,
-  },
 });
 
 export default axios;

@@ -4,10 +4,17 @@ const uiSlice = createSlice({
   name: "uislice",
   initialState: {
     scrollPosition: 0,
+    geoLocation: {
+      lattitude: 0,
+      longitude: 0,
+    },
   },
   reducers: {
     updatePosition: (state, action) => {
       state.scrollPosition = action.payload;
+    },
+    updateGeolocation: (state, action) => {
+      state.geoLocation = action.payload;
     },
   },
 });
@@ -40,7 +47,7 @@ const userSlice = createSlice({
 
 export const { addUser, removeUser, clearAllUsers } = userSlice.actions;
 
-export const { updatePosition } = uiSlice.actions;
+export const { updatePosition, updateGeolocation } = uiSlice.actions;
 
 export const reducers = {
   ui: uiSlice.reducer,

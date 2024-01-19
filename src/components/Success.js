@@ -7,7 +7,7 @@ function Success() {
   const navigate = useNavigate();
   useEffect(() => {
     const redirect = setTimeout(() => {
-      navigate("/");
+      navigate("/local-news");
     }, 1500);
 
     return () => clearTimeout(redirect);

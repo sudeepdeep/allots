@@ -4,61 +4,126 @@ import Lottie from "lottie-react";
 import uploadLoad from "../assets/uploadLoading.json";
 import { ComboButton } from "../components/ComboButton";
 import Success from "../components/Success";
+import TextField from "../components/TextField";
+import Section from "../components/Section";
+import Cookies from "js-cookie";
+import { useLocation } from "../utils/useLocation";
+import { useValidUser } from "../utils/useValidUser";
+import axios from "../utils/axios";
 
 function UploadPost() {
   const [uploadUi, setUploadUi] = useState(true);
+  const [form, setForm] = useState({
+    title: null,
+    abstract: null,
+    description: null,
+    coverUrl: null,
+    username: null,
+    section: null,
+  });
   useEffect(() => {
     const uploadLoading = setTimeout(() => {
       setUploadUi(false);
-    }, 3020);
+    }, 3050);
 
     return () => clearTimeout(uploadLoading);
   }, []);
 
   const [success, setSuccess] = useState(false);
-  function handleUploadFunction() {
-    setSuccess(true);
+  const locs = useLocation();
+  const user = useValidUser();
+
+  async function handleUploadFunction() {
+    await axios
+      .post("/article", {
+        ...form,
+        latitude: locs.latitude,
+        longitude: locs.longitude,
+        username: user.name,
+        userType: user.name,
+        coordinates: [locs.longitude, locs.latitude],
+      })
+      .then((res) => {
+        setSuccess(true);
+      });
   }
 
   if (success) return <Success />;
 
   if (uploadUi)
     return (
-      <div className="w-full h-[70vh] flex items-center">
+      <div className="w-full flex flex-col h-[70vh] items-center justify-center">
         <Lottie
           animationData={uploadLoad}
           className=" w-[200px] mx-auto my-auto md:w-[630px]"
           loop={true}
           autoplay={true}
         ></Lottie>
+        <span className="opacity-75 text-center">
+          Tip: Login to get verified & to keep track of your articles
+        </span>
       </div>
     );
   return (
     <div className="max-w-xl mx-auto font-bold text-2xl">
-      <h3>Add Post</h3>
-      <div className="my-2">
-        <label
-          htmlFor="about"
-          className="block text-sm font-medium leading-6 text-white"
-        >
-          what's on your mind?
-        </label>
-        <div className="mt-2">
-          <textarea
-            id="about"
-            name="about"
-            rows={3}
-            className="block font-normal w-full bg-transparent rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            defaultValue={""}
-          />
-        </div>
-        <p className="mt-3 text-sm leading-6 text-gray-600">
-          Share your thoughts and experiences with us.
-        </p>
+      <h3>Add Article</h3>
+      <div className="flex flex-col">
+        <Section
+          onChange={(e) => {
+            setForm({
+              ...form,
+              section: e,
+            });
+          }}
+        />
+        <TextField
+          title="Title for the article."
+          onChange={(e) => {
+            setForm({
+              ...form,
+              title: e,
+            });
+          }}
+          name="title"
+        />
+        <TextField
+          title=" Abstract for the article."
+          onChange={(e) => {
+            setForm({
+              ...form,
+              abstract: e,
+            });
+          }}
+          name="abstract"
+          subtitle="Keep it brief and simple."
+          rows={3}
+        />
+        <TextField
+          title=" Description for the article."
+          onChange={(e) => {
+            setForm({
+              ...form,
+              description: e,
+            });
+          }}
+          name="abstract"
+          subtitle="Make sure the above info is correct"
+          rows={3}
+        />
       </div>
-      <UploadPhoto title={"Upload Photo"} />
-
-      <ComboButton title={"Post"} onClick={handleUploadFunction} />
+      <UploadPhoto
+        title={"Upload Cover"}
+        handleChange={(e) => {
+          setForm({
+            ...form,
+            coverUrl: e,
+          });
+        }}
+      />
+      <ComboButton
+        title={Cookies.get("user") ? "Post" : "Post as anonymous"}
+        onClick={handleUploadFunction}
+      />
     </div>
   );
 }

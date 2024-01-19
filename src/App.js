@@ -7,6 +7,7 @@ import Register from "./pages/auth/Register";
 import Profile from "./pages/Profile";
 import Bookings from "./pages/Bookings";
 import UploadPost from "./pages/UploadPost";
+import PublicArticle from "./pages/PublicArticle";
 
 const appRouter = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const appRouter = createBrowserRouter([
       },
 
       {
-        path: "/bookings",
+        path: "/local-news",
         element: <Bookings />,
       },
 
@@ -33,6 +34,10 @@ const appRouter = createBrowserRouter([
         element: <Profile />,
       },
     ],
+  },
+  {
+    path: "/public-article/:id",
+    element: <PublicArticle />,
   },
   {
     path: "/login",

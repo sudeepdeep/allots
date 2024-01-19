@@ -19,7 +19,7 @@ import { useState } from "react";
 
 const menuLists = [
   {
-    title: "Home",
+    title: "Global",
     path: "/",
     icon: <HomeIcon />,
     activeIcon: <ActivateHomeIcon />,
@@ -38,8 +38,8 @@ const menuLists = [
     activeIcon: <ActiveAdd />,
   },
   {
-    title: "Bookings",
-    path: "/bookings",
+    title: "Local",
+    path: "/local-news",
     icon: <ExploreIcon />,
     activeIcon: <ActivateExploreIcon />,
   },
