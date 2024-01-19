@@ -1,5 +1,5 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
+import axios from "../utils/axios";
 import { useState } from "react";
 
 export const UploadPhoto = ({ title = false, handleChange = false }) => {
@@ -8,15 +8,10 @@ export const UploadPhoto = ({ title = false, handleChange = false }) => {
     const selectedFiles = e.target.files;
     const formData = new FormData();
     formData.append("file", selectedFiles[0]);
-    await axios
-      .post(
-        "https://woid-backend.onrender.com/post/6578d5ad64be628bc3b87053/upload",
-        formData
-      )
-      .then((res) => {
-        handleChange(res.data.fileUrl);
-        setCover((prevArray) => [...prevArray, res.data.fileUrl]);
-      });
+    await axios.post(`/post/allot/upload`, formData).then((res) => {
+      handleChange(res.data.fileUrl);
+      setCover((prevArray) => [...prevArray, res.data.fileUrl]);
+    });
   }
 
   return (
