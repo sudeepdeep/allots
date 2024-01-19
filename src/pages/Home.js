@@ -4,38 +4,36 @@ import Feed from "../components/Feed";
 import Select from "../components/Select";
 
 export const sectionOptions = [
-  {
-    name: "General",
-    value: "general",
-  },
-  {
-    name: "Business",
-    value: "business",
-  },
-  {
-    name: "Entertainment",
-    value: "entertainment",
-  },
-  {
-    name: "Health",
-    value: "health",
-  },
-  {
-    name: "Science",
-    value: "science",
-  },
-  {
-    name: "Sports",
-    value: "sports",
-  },
-  {
-    name: "Technology",
-    value: "technology",
-  },
+  { name: "World", value: "world" },
+  { name: "United States", value: "us" },
+  { name: "Upshot", value: "upshot" },
+  { name: "Travel", value: "travel" },
+  { name: "T-Magazine", value: "t-magazine" },
+  { name: "Theater", value: "theater" },
+  { name: "Technology", value: "technology" },
+  { name: "Sunday Review", value: "sundayreview" },
+  { name: "Sports", value: "sports" },
+  { name: "Science", value: "science" },
+  { name: "Real Estate", value: "realestate" },
+  { name: "Politics", value: "politics" },
+  { name: "Opinion", value: "opinion" },
+  { name: "Obituaries", value: "obituaries" },
+  { name: "NY Region", value: "nyregion" },
+  { name: "Movies", value: "movies" },
+  { name: "Magazine", value: "magazine" },
+  { name: "Insider", value: "insider" },
+  { name: "Home (Default)", value: "home" },
+  { name: "Health", value: "health" },
+  { name: "Food", value: "food" },
+  { name: "Fashion", value: "fashion" },
+  { name: "Business", value: "business" },
+  { name: "Books/Review", value: "books/review" },
+  { name: "Automobiles", value: "automobiles" },
+  { name: "Arts", value: "arts" },
 ];
 
 function Home() {
-  const [section, setSection] = useState("general");
+  const [section, setSection] = useState("home");
   const [country, setCountry] = useState("in");
 
   const countryOptions = [
@@ -104,7 +102,8 @@ function Home() {
   }
   return (
     <div className="timeline max-w-xl mx-auto">
-      <h2 className="text-center font-bold my-5">Latest Global News </h2>
+      <p className="text-center font-bold my-5">Latest Global News</p>
+
       <div className="flex gap-4">
         <Select
           onChange={handleSectionChange}
@@ -113,14 +112,14 @@ function Home() {
           value={section}
         />
 
-        <Select
+        {/* <Select
           onChange={handleCountryChange}
           options={countryOptions}
           title={"Country"}
           value={country}
-        />
+        /> */}
       </div>
-      <Feed section={section} country={country} />
+      <Feed section={section} />
     </div>
   );
 }
