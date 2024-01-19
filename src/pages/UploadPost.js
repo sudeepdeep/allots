@@ -5,11 +5,12 @@ import uploadLoad from "../assets/uploadLoading.json";
 import { ComboButton } from "../components/ComboButton";
 import Success from "../components/Success";
 import TextField from "../components/TextField";
-import Section from "../components/Section";
+import Select from "../components/Select";
 import Cookies from "js-cookie";
 import { useLocation } from "../utils/useLocation";
 import { useValidUser } from "../utils/useValidUser";
 import axios from "../utils/axios";
+import { sectionOptions } from "./Home";
 
 function UploadPost() {
   const [uploadUi, setUploadUi] = useState(true);
@@ -68,14 +69,18 @@ function UploadPost() {
     <div className="max-w-xl mx-auto font-bold text-2xl">
       <h3>Add Article</h3>
       <div className="flex flex-col">
-        <Section
+        <Select
           onChange={(e) => {
             setForm({
               ...form,
               section: e,
             });
           }}
+          options={sectionOptions}
+          title={"Section"}
+          value={form.section}
         />
+
         <TextField
           title="Title for the article."
           onChange={(e) => {

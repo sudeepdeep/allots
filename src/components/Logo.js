@@ -1,8 +1,8 @@
 const Logo = () => {
   return (
-    <div className="font-lemon">
+    <div className="font-poppins">
       <span className="text-[#c3073f]">
-        A<span className="text-white">llot</span>
+        SNAP<span className="text-white">NEWS</span>
       </span>
     </div>
   );

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import articleLoading from "../assets/articles.json";
 import ArticleFeed from "../components/ArticleFeed";
-import Section from "../components/Section";
 import axios from "../utils/axios";
 import { useLocation } from "../utils/useLocation";
 
