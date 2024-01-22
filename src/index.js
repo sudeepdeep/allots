@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import { store } from "./utils/store";
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient();
 

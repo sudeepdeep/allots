@@ -1,6 +1,7 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import axios from "../utils/axios";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 export const UploadPhoto = ({ title = false, handleChange = false }) => {
   const [cover, setCover] = useState([]);
@@ -8,10 +9,12 @@ export const UploadPhoto = ({ title = false, handleChange = false }) => {
     const selectedFiles = e.target.files;
     const formData = new FormData();
     formData.append("file", selectedFiles[0]);
-    await axios.post(`/post/allot/upload`, formData).then((res) => {
-      handleChange(res.data.fileUrl);
-      setCover((prevArray) => [...prevArray, res.data.fileUrl]);
-    });
+    await axios
+      .post(`/user/${Cookies.get("userId")}/upload-profile`, formData)
+      .then((res) => {
+        handleChange(res.data.fileUrl);
+        setCover((prevArray) => [...prevArray, res.data.fileUrl]);
+      });
   }
 
   return (

@@ -3,9 +3,11 @@ import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 
 const token = Cookies.get("token");
-
 let axios = Axios.create({
   baseURL: process.env.REACT_APP_API_HOST,
+  headers: {
+    Authorization: "Bearer " + token,
+  },
 });
 
 export default axios;

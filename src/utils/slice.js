@@ -19,6 +19,30 @@ const uiSlice = createSlice({
   },
 });
 
+const loggedInUserSlice = createSlice({
+  name: "user",
+  initialState: {
+    userData: {
+      username: "",
+      email: "",
+      profileUrl: null,
+      bio: null,
+      coverUrl: null,
+    },
+  },
+  reducers: {
+    addUser: (state, action) => {
+      state.userData = action.payload;
+    },
+    updateUser: (state, action) => {
+      state.userData = action.payload;
+    },
+    clearUser: (state, action) => {
+      state.userData = {};
+    },
+  },
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -26,6 +50,9 @@ const userSlice = createSlice({
       {
         username: "dummy",
         email: "dummy@gmail.com",
+        profileUrl: null,
+        bio: null,
+        coverUrl: null,
       },
     ],
   },
@@ -45,11 +72,14 @@ const userSlice = createSlice({
   },
 });
 
-export const { addUser, removeUser, clearAllUsers } = userSlice.actions;
+export const { removeUser, clearAllUsers } = userSlice.actions;
 
 export const { updatePosition, updateGeolocation } = uiSlice.actions;
+
+export const { addUser, clearUser, updateUser } = loggedInUserSlice.actions;
 
 export const reducers = {
   ui: uiSlice.reducer,
   user: userSlice.reducer,
+  loggedInUser: loggedInUserSlice.reducer,
 };

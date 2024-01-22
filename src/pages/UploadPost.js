@@ -126,7 +126,7 @@ function UploadPost() {
         }}
       />
       <ComboButton
-        title={Cookies.get("user") ? "Post" : "Post as anonymous"}
+        title={Cookies.get("userId") ? "Post" : "Post as anonymous"}
         onClick={handleUploadFunction}
       />
     </div>

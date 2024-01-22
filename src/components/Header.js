@@ -1,27 +1,26 @@
 import React, { useEffect } from "react";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import {
-  HomeIcon,
-  ExploreIcon,
-  MessageIcon,
-  Add,
-  ProfileIcon,
-  ActivateHomeIcon,
-  ActivateMessageIcon,
-  ActivateExploreIcon,
-  ActiveAdd,
-  ActivateProfileIcon,
-} from "../assets/Icons";
-import Logo from "./Logo";
-import ActiveStrip from "./ActiveStrip";
 import { useState } from "react";
+import {
+  ActivateHomeIcon,
+  ActivateProfileIcon,
+  ActiveAdd,
+  ActiveLocationIcon,
+  Add,
+  ExploreIcon,
+  LocationIcon,
+  ProfileIcon,
+} from "../assets/Icons";
+import ActiveStrip from "./ActiveStrip";
+import Logo from "./Logo";
+import Cookies from "js-cookie";
 
 const menuLists = [
   {
     title: "Global",
     path: "/",
-    icon: <HomeIcon />,
+    icon: <ExploreIcon />,
     activeIcon: <ActivateHomeIcon />,
   },
   // {
@@ -40,8 +39,8 @@ const menuLists = [
   {
     title: "Local",
     path: "/local-news",
-    icon: <ExploreIcon />,
-    activeIcon: <ActivateExploreIcon />,
+    icon: <LocationIcon />,
+    activeIcon: <ActiveLocationIcon />,
   },
   {
     title: "Profile",
@@ -53,7 +52,10 @@ const menuLists = [
 
 function Header({ scrollPosition }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [path, setPath] = useState("");
+  const userId = Cookies.get("userId");
+
   useEffect(() => {
     setPath(location.pathname);
   }, [location]);
@@ -96,8 +98,11 @@ function Header({ scrollPosition }) {
           </div>
         ))}
       </div>
-      <h2 className="text-sm text-white font-thin tracking-widest hidden md:block">
-        user
+      <h2
+        className="text-sm text-white font-thin tracking-widest hidden md:block cursor-pointer"
+        onClick={() => navigate("login")}
+      >
+        {!userId ? "login" : "user"}
       </h2>
     </>
   );

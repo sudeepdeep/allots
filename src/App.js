@@ -8,6 +8,8 @@ import Profile from "./pages/Profile";
 import Bookings from "./pages/Bookings";
 import UploadPost from "./pages/UploadPost";
 import PublicArticle from "./pages/PublicArticle";
+import Success from "./pages/auth/Success";
+import Logout from "./pages/auth/Logout";
 
 const appRouter = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const appRouter = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/success",
+    element: <Success />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
   },
 ]);
 

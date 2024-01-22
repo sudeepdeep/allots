@@ -3,15 +3,21 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import Logo from "../components/Logo";
-import { updatePosition } from "../utils/slice";
+import { updatePosition, addUser } from "../utils/slice";
 import { store } from "../utils/store";
 import { MoveTop } from "../components/MoveTop";
+import Cookies from "js-cookie";
+import axios from "../utils/axios";
 
 function AppLayout() {
   const scrollPosition = useSelector((store) => store.ui.scrollPosition);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    axios.get(`/user/${Cookies.get("userId")}/my-profile`).then((res) => {
+      dispatch(addUser(res.data.user));
+    });
+
     const handleScroll = () => {
       dispatch(updatePosition(window.scrollY));
     };

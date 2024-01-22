@@ -1,7 +1,35 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { ComboButton } from "./ComboButton";
+import { UploadPhoto } from "./UploadPhoto";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import TextField from "./TextField";
+import { updateUser } from "../utils/slice";
+import axios, { axiosErrorToast } from "../utils/axios";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import ImageContainer from "./ImageContainer";
 
 export default function Form() {
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.loggedInUser.userData);
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios
+      .put(`/user/${Cookies.get("userId")}`, {
+        email: user?.email,
+        username: user?.username,
+        profileUrl: user?.profileUrl,
+        coverUrl: user?.coverUrl,
+        bio: user?.bio,
+      })
+      .then((res) => {
+        toast.success("user updated successfully");
+      })
+      .catch((err) => {
+        axiosErrorToast(err);
+      });
+  }
   return (
     <form>
       <div className="space-y-12">
@@ -25,7 +53,7 @@ export default function Form() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
-                    allots/
+                    snapnews/
                   </span>
                   <input
                     type="text"
@@ -34,91 +62,110 @@ export default function Form() {
                     autoComplete="username"
                     className="block flex-1 border-0 overflow-hidden bg-transparent py-1.5 pl-1 text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="janesmith"
+                    value={user?.username}
+                    onChange={(e) =>
+                      dispatch(
+                        updateUser({
+                          ...user,
+                          username: e.target.value,
+                        })
+                      )
+                    }
                   />
                 </div>
               </div>
             </div>
-
-            <div className="col-span-full">
-              <label
-                htmlFor="about"
-                className="block text-sm font-medium leading-6 text-white"
-              >
-                About
-              </label>
-              <div className="mt-2">
-                <textarea
-                  id="about"
-                  name="about"
-                  rows={3}
-                  className="block w-full bg-transparent rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={""}
+            <TextField
+              value={user?.email}
+              title={"Email"}
+              name={"email"}
+              type="email"
+              onChange={(e) =>
+                dispatch(
+                  updateUser({
+                    ...user,
+                    email: e,
+                  })
+                )
+              }
+            />
+            <TextField
+              value={user?.bio}
+              title={"About"}
+              name={"about"}
+              rows={3}
+              subtitle={"Write a few sentences about yourself."}
+              onChange={(e) =>
+                dispatch(
+                  updateUser({
+                    ...user,
+                    bio: e,
+                  })
+                )
+              }
+            />
+            {user?.profileUrl ? (
+              <div className="col-span-full">
+                <ImageContainer
+                  url={user?.profileUrl}
+                  handleDelete={() =>
+                    dispatch(
+                      updateUser({
+                        ...user,
+                        profileUrl: null,
+                      })
+                    )
+                  }
                 />
               </div>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                Write a few sentences about yourself.
-              </p>
-            </div>
-
-            <div className="col-span-full">
-              <label
-                htmlFor="photo"
-                className="block text-sm font-medium leading-6 text-white"
-              >
-                Photo
-              </label>
-              <div className="mt-2 flex items-center gap-x-3">
-                <UserCircleIcon
-                  className="h-12 w-12 text-gray-300"
-                  aria-hidden="true"
+            ) : (
+              <div className="col-span-full">
+                <UploadPhoto
+                  title={"Profile Photo"}
+                  handleChange={(e) => {
+                    dispatch(
+                      updateUser({
+                        ...user,
+                        profileUrl: e,
+                      })
+                    );
+                  }}
                 />
-                <button
-                  type="button"
-                  className="rounded-md px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-[#c3073f] hover:bg-[#c3073f]"
-                >
-                  Change
-                </button>
               </div>
-            </div>
+            )}
 
-            <div className="col-span-full">
-              <label
-                htmlFor="cover-photo"
-                className="block text-sm font-medium leading-6 text-white"
-              >
-                Cover photo
-              </label>
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-white px-6 py-10">
-                <div className="text-center">
-                  <PhotoIcon
-                    className="mx-auto h-12 w-12 text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                    <label
-                      htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md  font-semibold text-[#c3073f] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#c3073f] focus-within:ring-offset-2 hover:text-[#c3073f]/70"
-                    >
-                      <span>Upload a file</span>
-                      <input
-                        id="file-upload"
-                        name="file-upload"
-                        type="file"
-                        className="sr-only"
-                      />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
-                  <p className="text-xs leading-5 text-gray-600">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
+            {user?.coverUrl ? (
+              <div className="col-span-full">
+                <ImageContainer
+                  url={user?.coverUrl}
+                  handleDelete={() =>
+                    dispatch(
+                      updateUser({
+                        ...user,
+                        coverUrl: null,
+                      })
+                    )
+                  }
+                />
               </div>
-            </div>
+            ) : (
+              <div className="col-span-full">
+                <UploadPhoto
+                  handleChange={(e) => {
+                    dispatch(
+                      updateUser({
+                        ...user,
+                        coverUrl: e,
+                      })
+                    );
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
+        {/* <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-white">
             Personal Information
           </h2>
@@ -274,9 +321,9 @@ export default function Form() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="border-b border-gray-900/10 pb-12">
+        {/* <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-white">
             Notifications
           </h2>
@@ -406,10 +453,10 @@ export default function Form() {
               </div>
             </fieldset>
           </div>
-        </div>
+        </div> */}
       </div>
 
-      <ComboButton />
+      <ComboButton onClick={handleSubmit} />
     </form>
   );
 }
