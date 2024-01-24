@@ -14,9 +14,11 @@ function AppLayout() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get(`/user/${Cookies.get("userId")}/my-profile`).then((res) => {
-      dispatch(addUser(res.data.user));
-    });
+    if (Cookies.get("userId")) {
+      axios.get(`/user/${Cookies.get("userId")}/my-profile`).then((res) => {
+        dispatch(addUser(res.data.user));
+      });
+    }
 
     const handleScroll = () => {
       dispatch(updatePosition(window.scrollY));

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Body from "../components/Body";
 import Feed from "../components/Feed";
 import Select from "../components/Select";
 

@@ -1,24 +1,35 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import axios from "../utils/axios";
-import { useState } from "react";
 import Cookies from "js-cookie";
+import { useState } from "react";
+import articleLoading from "../assets/articles.json";
+import axios, { axiosErrorToast } from "../utils/axios";
+import { AnimationLoading } from "./Loading";
 
 export const UploadPhoto = ({ title = false, handleChange = false }) => {
   const [cover, setCover] = useState([]);
+  const [loading, setLoading] = useState(false);
   async function handleFileUpload(e) {
+    setLoading(true);
     const selectedFiles = e.target.files;
     const formData = new FormData();
     formData.append("file", selectedFiles[0]);
     await axios
       .post(`/user/${Cookies.get("userId")}/upload-profile`, formData)
       .then((res) => {
+        setLoading(false);
         handleChange(res.data.fileUrl);
         setCover((prevArray) => [...prevArray, res.data.fileUrl]);
+      })
+      .catch((err) => {
+        setLoading(false);
+        axiosErrorToast(err);
       });
   }
 
+  if (loading) <AnimationLoading animation={articleLoading} />;
+
   return (
-    <>
+    <div>
       <label
         htmlFor="cover-photo"
         className="block text-sm font-medium leading-6 text-white"
@@ -64,6 +75,6 @@ export const UploadPhoto = ({ title = false, handleChange = false }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };

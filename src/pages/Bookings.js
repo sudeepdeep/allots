@@ -1,8 +1,8 @@
-import Lottie from "lottie-react";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import articleLoading from "../assets/articles.json";
 import ArticleFeed from "../components/ArticleFeed";
+import { AnimationLoading } from "../components/Loading";
 import axios from "../utils/axios";
 import { useLocation } from "../utils/useLocation";
 
@@ -43,12 +43,7 @@ const Bookings = () => {
   if (isLoading)
     return (
       <>
-        <Lottie
-          animationData={articleLoading}
-          className=" w-[200px] mx-auto my-auto md:w-[630px]"
-          loop={true}
-          autoplay={true}
-        ></Lottie>
+        <AnimationLoading animation={articleLoading} />
       </>
     );
   return (

@@ -37,7 +37,7 @@ const loggedInUserSlice = createSlice({
     updateUser: (state, action) => {
       state.userData = action.payload;
     },
-    clearUser: (state, action) => {
+    clearUser: (state) => {
       state.userData = {};
     },
   },

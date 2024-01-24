@@ -38,7 +38,7 @@ function Feed({ section, country = false }) {
     <>
       {isLoading && <Loading />}
       {items?.map((post, feedIndex) => (
-        <div>
+        <div className={feedIndex}>
           <div className="postCard bg-[#010409] w-full h-auto  p-6 mb-2  rounded-md">
             <div className="postTitle flex gap-1 items-center">
               <div className="displayPic w-[100px] h-[40px] cursor-pointer rounded-md border-[#0D1117] border-2 overflow-hidden">

@@ -1,14 +1,20 @@
-import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const useValidUser = () => {
-  const user = Cookies.get("userId");
-  return user
-    ? {
+  const [status, setStatus] = useState({
+    status: false,
+    name: "anonymous",
+  });
+  const userStore = useSelector((store) => store.loggedInUser.userData);
+  useEffect(() => {
+    if (userStore.username) {
+      setStatus({
         status: true,
-        name: user.username,
-      }
-    : {
-        status: false,
-        name: "anonymous",
-      };
+        name: userStore.username,
+      });
+    }
+  }, [userStore.username]);
+
+  return status;
 };

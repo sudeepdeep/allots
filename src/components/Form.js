@@ -1,14 +1,12 @@
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { ComboButton } from "./ComboButton";
-import { UploadPhoto } from "./UploadPhoto";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import TextField from "./TextField";
-import { updateUser } from "../utils/slice";
-import axios, { axiosErrorToast } from "../utils/axios";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import axios, { axiosErrorToast } from "../utils/axios";
+import { updateUser } from "../utils/slice";
+import { ComboButton } from "./ComboButton";
 import ImageContainer from "./ImageContainer";
+import TextField from "./TextField";
+import { UploadPhoto } from "./UploadPhoto";
 
 export default function Form() {
   const dispatch = useDispatch();
@@ -42,7 +40,7 @@ export default function Form() {
             share.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="mt-2">
             <div className="sm:col-span-4">
               <label
                 htmlFor="username"

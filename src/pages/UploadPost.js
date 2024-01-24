@@ -13,14 +13,15 @@ import axios from "../utils/axios";
 import { sectionOptions } from "./Home";
 
 function UploadPost() {
+  const user = useValidUser();
   const [uploadUi, setUploadUi] = useState(true);
   const [form, setForm] = useState({
     title: null,
     abstract: null,
     description: null,
     coverUrl: null,
-    username: null,
-    section: null,
+    username: user.name,
+    section: sectionOptions[0].value,
   });
   useEffect(() => {
     const uploadLoading = setTimeout(() => {
@@ -30,9 +31,15 @@ function UploadPost() {
     return () => clearTimeout(uploadLoading);
   }, []);
 
+  useEffect(() => {
+    setForm({
+      ...form,
+      username: user.name,
+    });
+  }, [user.name]);
+
   const [success, setSuccess] = useState(false);
   const locs = useLocation();
-  const user = useValidUser();
 
   async function handleUploadFunction() {
     await axios
@@ -41,7 +48,7 @@ function UploadPost() {
         latitude: locs.latitude,
         longitude: locs.longitude,
         username: user.name,
-        userType: user.name,
+        userType: user.name !== "anonymous" ? "verified" : "not-verified",
         coordinates: [locs.longitude, locs.latitude],
       })
       .then((res) => {
@@ -56,7 +63,7 @@ function UploadPost() {
       <div className="w-full flex flex-col h-[70vh] items-center justify-center">
         <Lottie
           animationData={uploadLoad}
-          className=" w-[200px] mx-auto my-auto md:w-[630px]"
+          className=" w-[200px] mx-auto my-auto md:w-[230px]"
           loop={true}
           autoplay={true}
         ></Lottie>
@@ -68,9 +75,10 @@ function UploadPost() {
   return (
     <div className="max-w-xl mx-auto font-bold text-2xl">
       <h3>Add Article</h3>
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-4">
         <Select
           onChange={(e) => {
+            console.log(e);
             setForm({
               ...form,
               section: e,
@@ -89,6 +97,7 @@ function UploadPost() {
               title: e,
             });
           }}
+          value={form.title}
           name="title"
         />
         <TextField
@@ -102,6 +111,7 @@ function UploadPost() {
           name="abstract"
           subtitle="Keep it brief and simple."
           rows={3}
+          value={form.abstract}
         />
         <TextField
           title=" Description for the article."
@@ -111,9 +121,10 @@ function UploadPost() {
               description: e,
             });
           }}
-          name="abstract"
+          name="description"
           subtitle="Make sure the above info is correct"
           rows={3}
+          value={form.description}
         />
       </div>
       <UploadPhoto

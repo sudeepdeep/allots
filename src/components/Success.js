@@ -1,8 +1,7 @@
-import React from "react";
-import success from "../assets/success.json";
 import Lottie from "lottie-react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import success from "../assets/success.json";
 function Success() {
   const navigate = useNavigate();
   useEffect(() => {

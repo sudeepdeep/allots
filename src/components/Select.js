@@ -18,7 +18,7 @@ function Select({
         >
           {title}
         </label>
-        <div className="my-2 font-normal">
+        <>
           <select
             id="country"
             name="country"
@@ -27,20 +27,18 @@ function Select({
             onChange={(e) => handleSectionChange(e.target.value)}
             value={value}
           >
-            {options?.map((option) => (
-              <>
-                <option
-                  _ngcontent-qii-c267=""
-                  value={option.value}
-                  class="ng-star-inserted"
-                >
-                  {" "}
-                  {option.name}{" "}
-                </option>
-              </>
+            {options?.map((option, index) => (
+              <option
+                key={index}
+                value={option.value}
+                className="ng-star-inserted"
+              >
+                {" "}
+                {option.name}{" "}
+              </option>
             ))}
           </select>
-        </div>
+        </>
       </div>
     </>
   );

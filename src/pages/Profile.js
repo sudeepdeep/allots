@@ -1,20 +1,48 @@
-import Lottie from "lottie-react";
-import Form from "../components/Form";
-import bgImg from "../assets/register.json";
-import signedOut from "../assets/logout.json";
-import { useValidUser } from "../utils/useValidUser";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Button";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import uploadLoad from "../assets/articles.json";
+import signedOut from "../assets/logout.json";
+import { Button } from "../components/Button";
+import Form from "../components/Form";
+import { AnimationLoading } from "../components/Loading";
+import { useValidUser } from "../utils/useValidUser";
 const Profile = () => {
+  const user = useValidUser();
+  const userStore = useSelector((store) => store.loggedInUser.userData);
+  const navigate = useNavigate();
+
   const [viewPage, setViewPage] = useState({
     profile: false,
     edit: false,
   });
 
+  if (!user.status)
+    return (
+      <div className="flex flex-col items-center justify-center md:flex-row">
+        <div>
+          <AnimationLoading animation={signedOut} />
+        </div>
+
+        <span className="text-center">
+          Oops..!! You haven't logged in yet.
+          <br />
+          <span
+            className="text-[#c3073f] cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            {" "}
+            Click here to login.
+          </span>
+        </span>
+      </div>
+    );
+
+  if (userStore.username.length === 0)
+    return <AnimationLoading animation={uploadLoad} />;
+
   return (
-    <div>
+    <div className="md:max-w-md mx-auto">
       {!viewPage.edit && !viewPage.profile && (
         <>
           <InitialDetails setViewPage={setViewPage} />
@@ -29,8 +57,9 @@ const Profile = () => {
 export default Profile;
 
 const InitialDetails = ({ setViewPage = false }) => {
+  const navigate = useNavigate();
   return (
-    <>
+    <div>
       <Button
         text={"View Profile"}
         handleSubmit={() => {
@@ -49,7 +78,9 @@ const InitialDetails = ({ setViewPage = false }) => {
           });
         }}
       />
-    </>
+
+      <Button text={"Logout"} handleSubmit={() => navigate("/logout")} />
+    </div>
   );
 };
 
@@ -70,21 +101,37 @@ const ViewProfile = ({ setViewPage = false }) => {
         <span className="font-semibold">Profile Badge</span>
         <div className="profile mt-2 relative rounded-md">
           <div className="cover border-2 rounded-sm border-slate-500 h-[100px] w-full absolute">
-            <img
-              src={user.profileUrl}
-              className="h-full w-full bg-black object-cover"
-              alt="cover"
-            />
+            {user.coverUrl ? (
+              <div>
+                <img
+                  src={user.coverUrl}
+                  className="h-full w-full bg-black object-cover"
+                  alt="cover"
+                />
+              </div>
+            ) : (
+              <>
+                <div className="h-full w-full bg-black object-cover"></div>
+              </>
+            )}
           </div>
-          <div className="profile  border-2 border-slate-500 rounded-full h-[60px] w-[60px] bg-black top-[56px] left-2 absolute">
-            <img
-              src={user.profileUrl}
-              className="h-full w-full object-cover"
-              alt="cover"
-            />
+          <div className="profile  border-2 border-slate-500 overflow-hidden rounded-full h-[60px] w-[60px] bg-black top-[66px] left-2 absolute">
+            {user.profileUrl ? (
+              <div>
+                <img
+                  src={user.profileUrl}
+                  className="h-[60px] w-[60px] object-cover"
+                  alt="cover"
+                />
+              </div>
+            ) : (
+              <>
+                <div className="h-full w-full bg-black object-cover"></div>
+              </>
+            )}
           </div>
         </div>
-        <div className="pt-[120px] bg-black rounded-md border-2 border-slate-500  p-3">
+        <div className="pt-[140px] bg-black rounded-md border-2 border-slate-500  p-3">
           <span className="font-semibold flex items-center gap-1 w-full">
             <div>{user?.username}</div>
             <img
@@ -103,53 +150,17 @@ const ViewProfile = ({ setViewPage = false }) => {
 };
 
 const EditProfile = ({ setViewPage = false }) => {
-  const user = useValidUser();
-  const navigate = useNavigate();
   return (
-    <>
+    <div>
       <span
         className="cursor-pointer"
         onClick={() => setViewPage({ edit: false, profile: false })}
       >
         {"< Back"}
       </span>
-      <div className="w-[100%] profile flex flex-col md:flex-row items-center justify-center">
-        {!user.status ? (
-          <div>
-            <Lottie
-              animationData={signedOut}
-              className=" w-[200px] mx-auto md:w-[630px]"
-              loop={true}
-              autoplay={true}
-            />
-          </div>
-        ) : (
-          <Lottie
-            animationData={bgImg}
-            className=" w-[200px] mx-auto md:w-[630px]"
-            loop={true}
-            autoplay={true}
-          />
-        )}
-
-        {!user.status ? (
-          <span className="text-center">
-            Oops..!! You haven't logged in yet.
-            <br />
-            <span
-              className="text-[#c3073f] cursor-pointer"
-              onClick={() => navigate("/login")}
-            >
-              {" "}
-              Click here to login.
-            </span>
-          </span>
-        ) : (
-          <div>
-            <Form />
-          </div>
-        )}
+      <div className="mt-3">
+        <Form />
       </div>
-    </>
+    </div>
   );
 };

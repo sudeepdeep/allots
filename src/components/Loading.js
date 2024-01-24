@@ -1,3 +1,4 @@
+import Lottie from "lottie-react";
 import React from "react";
 
 function Loading() {
@@ -109,3 +110,16 @@ export function ProfileLoading() {
     </div>
   );
 }
+
+export const AnimationLoading = ({ animation = false }) => {
+  return (
+    <>
+      <Lottie
+        animationData={animation}
+        className=" w-[200px] mx-auto md:w-[230px]"
+        loop={true}
+        autoplay={true}
+      />
+    </>
+  );
+};
