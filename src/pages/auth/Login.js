@@ -2,13 +2,11 @@ import Cookies from "js-cookie";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import logo from "../../assets/loginlogo.png";
 import bgImg from "../../assets/lottie-bg.json";
-import axios, { axiosErrorToast } from "../../utils/axios";
-import TextField from "../../components/TextField";
 import { Button } from "../../components/Button";
 import Logo from "../../components/Logo";
+import TextField from "../../components/TextField";
+import axios, { axiosErrorToast } from "../../utils/axios";
 function Login() {
   const existingUserCheck = Cookies.get("token");
   const [loading, setLoading] = useState(false);
@@ -52,6 +50,7 @@ function Login() {
         <TextField
           name="username"
           title="Enter Username"
+          value={username}
           onChange={(e) => setUsername(e)}
         />
 
@@ -59,6 +58,7 @@ function Login() {
           name="password"
           type="password"
           title="Enter Password"
+          value={password}
           onChange={(e) => setPassword(e)}
         />
         <Button disabled={loading} text={"Login"} handleSubmit={handleLogin} />

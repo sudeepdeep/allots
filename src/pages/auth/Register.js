@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios, { axiosErrorToast } from "../../utils/axios";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Lottie from "lottie-react";
-import logo from "../../assets/loginlogo.png";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import bgImg from "../../assets/register.json";
-import TextField from "../../components/TextField";
 import { Button } from "../../components/Button";
 import Logo from "../../components/Logo";
-import { toast } from "react-toastify";
+import TextField from "../../components/TextField";
+import axios, { axiosErrorToast } from "../../utils/axios";
 
 function Register() {
   const navigate = useNavigate();
@@ -65,6 +63,7 @@ function Register() {
                 username: e,
               })
             }
+            value={userData.username}
           />
 
           <TextField
@@ -77,6 +76,7 @@ function Register() {
                 email: e,
               })
             }
+            value={userData.email}
           />
 
           <TextField
@@ -89,6 +89,7 @@ function Register() {
                 password: e,
               })
             }
+            value={userData.password}
           />
 
           <Button
