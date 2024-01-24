@@ -11,6 +11,7 @@ import PublicArticle from "./pages/PublicArticle";
 import Success from "./pages/auth/Success";
 import Logout from "./pages/auth/Logout";
 import UserProfile from "./pages/UserProfile";
+import Comment from "./pages/Comment";
 
 const appRouter = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/user-profile/:username",
         element: <UserProfile />,
+      },
+      {
+        path: "/comments/:articleId",
+        element: <Comment />,
       },
     ],
   },

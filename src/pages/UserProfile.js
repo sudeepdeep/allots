@@ -25,9 +25,11 @@ function UserProfile() {
   );
   if (isLoading && articleLoading) return <h1>Loading...</h1>;
   return (
-    <div className="flex flex-col gap-2">
+    <div className="max-w-md mx-auto">
       <ViewProfile user={data} />
-      <ArticleFeed items={articleData} />
+      <div className="mt-2">
+        <ArticleFeed items={articleData} />
+      </div>
     </div>
   );
 }

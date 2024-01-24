@@ -1,6 +1,8 @@
 import React from "react";
 import { dateConverter } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
+import Interaction from "./Interaction";
+import Cookies from "js-cookie";
 
 function ArticleFeed({ items }) {
   const navigate = useNavigate();
@@ -76,7 +78,16 @@ function ArticleFeed({ items }) {
                     </div>
                   </>
                 </div>
-                <div className="postFooter flex gap-2 mt-7 items-center justify-between">
+                {Cookies.get("userId") && (
+                  <Interaction
+                    articleId={post._id}
+                    likedPost={post.likedBy.includes(Cookies.get("userId"))}
+                    commentsCount={post.comments.length}
+                    likesCount={post.likedBy.length}
+                  />
+                )}
+
+                <div className="postFooter flex gap-2 items-center justify-between">
                   <div className="postText mt-2 text-white">
                     Published- {dateConverter(post?.createdAt)}
                   </div>

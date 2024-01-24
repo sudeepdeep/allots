@@ -9,6 +9,7 @@ function TextField({
   rows = 0,
   type = false,
   value = false,
+  placeholder = false,
 }) {
   function handleTextChange(e) {
     onChange(e.target.value);
@@ -35,6 +36,7 @@ function TextField({
                 name={name}
                 id={name}
                 value={value ? value : ""}
+                placeholder={placeholder}
                 className="block w-full font-normal rounded-md border-0 py-1.5 text-white bg-[#0D1117] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={(e) => handleTextChange(e)}
               />

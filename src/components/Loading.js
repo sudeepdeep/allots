@@ -111,14 +111,19 @@ export function ProfileLoading() {
   );
 }
 
-export const AnimationLoading = ({ animation = false }) => {
+export const AnimationLoading = ({
+  animation = false,
+  loop = true,
+  autoplay = true,
+  styles = "w-[200px] mx-auto md:w-[230px]",
+}) => {
   return (
     <>
       <Lottie
         animationData={animation}
-        className=" w-[200px] mx-auto md:w-[230px]"
-        loop={true}
-        autoplay={true}
+        className={styles}
+        loop={loop}
+        autoplay={autoplay}
       />
     </>
   );
