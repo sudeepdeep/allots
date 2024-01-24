@@ -62,6 +62,12 @@ function Login() {
           onChange={(e) => setPassword(e)}
         />
         <Button disabled={loading} text={"Login"} handleSubmit={handleLogin} />
+        <p className="text-slate-400 text-center">or</p>
+        <Button
+          disabled={loading}
+          text={"Login as Guest"}
+          handleSubmit={() => navigate("/")}
+        />
 
         <h4 className="font-normal text-white">
           New user?{" "}
