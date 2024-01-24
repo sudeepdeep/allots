@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { UploadPhoto } from "../components/UploadPhoto";
-import Lottie from "lottie-react";
 import uploadLoad from "../assets/uploadLoading.json";
 import { ComboButton } from "../components/ComboButton";
 import Success from "../components/Success";
@@ -9,11 +8,14 @@ import Select from "../components/Select";
 import Cookies from "js-cookie";
 import { useLocation } from "../utils/useLocation";
 import { useValidUser } from "../utils/useValidUser";
-import axios from "../utils/axios";
+import axios, { axiosErrorToast } from "../utils/axios";
 import { sectionOptions } from "./Home";
+import AlertDialog from "../components/AlertDialog";
+import { AnimationLoading } from "../components/Loading";
 
 function UploadPost() {
   const user = useValidUser();
+  const [showDialog, setShowDialog] = useState(false);
   const [uploadUi, setUploadUi] = useState(true);
   const [form, setForm] = useState({
     title: null,
@@ -41,8 +43,8 @@ function UploadPost() {
   const [success, setSuccess] = useState(false);
   const locs = useLocation();
 
-  async function handleUploadFunction() {
-    await axios
+  function handleSubmit() {
+    axios
       .post("/article", {
         ...form,
         latitude: locs.latitude,
@@ -53,7 +55,20 @@ function UploadPost() {
       })
       .then((res) => {
         setSuccess(true);
-      });
+      })
+      .catch((err) => axiosErrorToast(err));
+  }
+
+  if (showDialog)
+    return (
+      <AlertDialog
+        title="Are you sure you want to post?"
+        handleSubmit={handleSubmit}
+        setDilog={setShowDialog}
+      />
+    );
+  async function handleUploadFunction() {
+    setShowDialog(true);
   }
 
   if (success) return <Success />;
@@ -61,12 +76,7 @@ function UploadPost() {
   if (uploadUi)
     return (
       <div className="w-full flex flex-col h-[70vh] items-center justify-center">
-        <Lottie
-          animationData={uploadLoad}
-          className=" w-[200px] mx-auto my-auto md:w-[230px]"
-          loop={true}
-          autoplay={true}
-        ></Lottie>
+        <AnimationLoading animation={uploadLoad} />
         <span className="opacity-75 text-center">
           Tip: Login to get verified & to keep track of your articles
         </span>
@@ -128,7 +138,7 @@ function UploadPost() {
         />
       </div>
       <UploadPhoto
-        title={"Upload Cover"}
+        title={"Upload Cover Photo"}
         handleChange={(e) => {
           setForm({
             ...form,

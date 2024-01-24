@@ -1,6 +1,6 @@
 import React from "react";
 
-function LabelComponent({ children, label = "false" }) {
+function LabelComponent({ children, label = false }) {
   return (
     <div className="my-2">
       <label

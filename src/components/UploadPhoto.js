@@ -25,8 +25,7 @@ export const UploadPhoto = ({ title = false, handleChange = false }) => {
         axiosErrorToast(err);
       });
   }
-
-  if (loading) <AnimationLoading animation={articleLoading} />;
+  if (loading) return <AnimationLoading animation={articleLoading} />;
 
   return (
     <div>

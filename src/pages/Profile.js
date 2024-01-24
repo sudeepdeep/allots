@@ -7,6 +7,7 @@ import { Button } from "../components/Button";
 import Form from "../components/Form";
 import { AnimationLoading } from "../components/Loading";
 import { useValidUser } from "../utils/useValidUser";
+import Cookies from "js-cookie";
 const Profile = () => {
   const user = useValidUser();
   const userStore = useSelector((store) => store.loggedInUser.userData);
@@ -17,7 +18,7 @@ const Profile = () => {
     edit: false,
   });
 
-  if (!user.status)
+  if (!Cookies.get("userId"))
     return (
       <div className="flex flex-col items-center justify-center md:flex-row">
         <div>
@@ -105,7 +106,7 @@ const ViewProfile = ({ setViewPage = false }) => {
               <div>
                 <img
                   src={user.coverUrl}
-                  className="h-full w-full bg-black object-cover"
+                  className="h-[100px] w-full bg-black object-cover"
                   alt="cover"
                 />
               </div>

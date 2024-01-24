@@ -102,40 +102,44 @@ export default function Form() {
                 )
               }
             />
-            {user?.profileUrl ? (
-              <div className="col-span-full">
-                <ImageContainer
-                  url={user?.profileUrl}
-                  handleDelete={() =>
-                    dispatch(
-                      updateUser({
-                        ...user,
-                        profileUrl: null,
-                      })
-                    )
-                  }
-                />
-              </div>
-            ) : (
-              <div className="col-span-full">
-                <UploadPhoto
-                  title={"Profile Photo"}
-                  handleChange={(e) => {
-                    dispatch(
-                      updateUser({
-                        ...user,
-                        profileUrl: e,
-                      })
-                    );
-                  }}
-                />
-              </div>
-            )}
+            <div className="my-10">
+              {user?.profileUrl ? (
+                <div className="col-span-full">
+                  <ImageContainer
+                    url={user?.profileUrl}
+                    title={"Profile Image"}
+                    handleDelete={() =>
+                      dispatch(
+                        updateUser({
+                          ...user,
+                          profileUrl: null,
+                        })
+                      )
+                    }
+                  />
+                </div>
+              ) : (
+                <div className="col-span-full">
+                  <UploadPhoto
+                    title={"Profile Photo"}
+                    handleChange={(e) => {
+                      dispatch(
+                        updateUser({
+                          ...user,
+                          profileUrl: e,
+                        })
+                      );
+                    }}
+                  />
+                </div>
+              )}
+            </div>
 
             {user?.coverUrl ? (
               <div className="col-span-full">
                 <ImageContainer
                   url={user?.coverUrl}
+                  title={"Cover Image"}
                   handleDelete={() =>
                     dispatch(
                       updateUser({

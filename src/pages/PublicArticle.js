@@ -34,8 +34,18 @@ function PublicArticle() {
         <div className="postTitle flex gap-1 items-center">
           <div className="userName font-semibold text-white cursor-pointer">
             {post?.title}
-            {" - "}
-            <span className="font-light">by {post?.username}</span>
+            <span className="font-light flex items-center gap-2">
+              by {post?.username}
+              {post.userType !== "anonymous" && (
+                <>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/3/32/Verified-badge.png"
+                    className="w-[14px] h-[14px]"
+                    alt="verify"
+                  />
+                </>
+              )}
+            </span>
           </div>
         </div>
         <div className="postImages grid gap-4">
