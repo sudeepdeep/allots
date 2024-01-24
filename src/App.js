@@ -10,6 +10,7 @@ import UploadPost from "./pages/UploadPost";
 import PublicArticle from "./pages/PublicArticle";
 import Success from "./pages/auth/Success";
 import Logout from "./pages/auth/Logout";
+import UserProfile from "./pages/UserProfile";
 
 const appRouter = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/user-profile/:username",
+        element: <UserProfile />,
       },
     ],
   },

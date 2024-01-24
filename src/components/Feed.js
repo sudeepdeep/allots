@@ -50,8 +50,16 @@ function Feed({ section, country = false }) {
               </div>
               <div className="userName font-semibold ml-2 text-white cursor-pointer">
                 {post?.title}
-                {" - "}
-                <span className="font-light">{post?.byline}</span>
+                <br />
+                <span className="font-light">
+                  {post?.byline}
+
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/3/32/Verified-badge.png"
+                    className="w-[14px] h-[14px] inline-block ml-1"
+                    alt="verify"
+                  />
+                </span>
               </div>
             </div>
             <div className="postImages grid gap-4">

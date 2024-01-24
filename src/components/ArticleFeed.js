@@ -22,7 +22,20 @@ function ArticleFeed({ items }) {
                   <div className="userName font-semibold ml-2 text-white cursor-pointer">
                     {post?.title}
                     <span className="font-light flex items-center gap-2">
-                      by {post?.username}
+                      by{" "}
+                      <span
+                        className={`text-[#c3073f] ${
+                          post.username === "anonymous"
+                            ? "cursor-not-allowed"
+                            : "cursor-pointer"
+                        }`}
+                        onClick={() => {
+                          post.username !== "anonymous" &&
+                            navigate(`/user-profile/${post.username}`);
+                        }}
+                      >
+                        {post?.username}
+                      </span>
                       {post.userType !== "anonymous" && (
                         <>
                           <img

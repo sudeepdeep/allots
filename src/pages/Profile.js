@@ -8,6 +8,7 @@ import Form from "../components/Form";
 import { AnimationLoading } from "../components/Loading";
 import { useValidUser } from "../utils/useValidUser";
 import Cookies from "js-cookie";
+import { MailIcon } from "../assets/Icons";
 const Profile = () => {
   const user = useValidUser();
   const userStore = useSelector((store) => store.loggedInUser.userData);
@@ -49,8 +50,30 @@ const Profile = () => {
           <InitialDetails setViewPage={setViewPage} />
         </>
       )}
-      {(viewPage.profile && <ViewProfile setViewPage={setViewPage} />) ||
-        (viewPage.edit && <EditProfile setViewPage={setViewPage} />)}
+      {(viewPage.profile && (
+        <>
+          <span
+            className="cursor-pointer"
+            onClick={() => setViewPage({ edit: false, profile: false })}
+          >
+            {"< Back"}
+          </span>
+          <br />
+          <br />
+          <ViewProfile user={userStore} />
+        </>
+      )) ||
+        (viewPage.edit && (
+          <>
+            <span
+              className="cursor-pointer"
+              onClick={() => setViewPage({ edit: false, profile: false })}
+            >
+              {"< Back"}
+            </span>
+            <EditProfile setViewPage={setViewPage} />
+          </>
+        ))}
     </div>
   );
 };
@@ -85,19 +108,9 @@ const InitialDetails = ({ setViewPage = false }) => {
   );
 };
 
-const ViewProfile = ({ setViewPage = false }) => {
-  const user = useSelector((store) => store.loggedInUser.userData);
+export const ViewProfile = ({ user = false }) => {
   return (
     <div>
-      <span
-        className="cursor-pointer"
-        onClick={() => setViewPage({ edit: false, profile: false })}
-      >
-        {"< Back"}
-      </span>
-      <br />
-      <br />
-
       <>
         <span className="font-semibold">Profile Badge</span>
         <div className="profile mt-2 relative rounded-md">
@@ -141,8 +154,10 @@ const ViewProfile = ({ setViewPage = false }) => {
               alt="verify"
             />
           </span>
-          <span className="font-normal text-[10px]">{user?.email}</span>
-          <br />
+          <span className="font-normal text-[10px] flex items-center gap-1">
+            <div>{user?.email}</div>
+            <MailIcon />
+          </span>
           <span className="font-normal text-[13px]">{user?.bio}</span>
         </div>
       </>
@@ -150,18 +165,10 @@ const ViewProfile = ({ setViewPage = false }) => {
   );
 };
 
-const EditProfile = ({ setViewPage = false }) => {
+const EditProfile = () => {
   return (
-    <div>
-      <span
-        className="cursor-pointer"
-        onClick={() => setViewPage({ edit: false, profile: false })}
-      >
-        {"< Back"}
-      </span>
-      <div className="mt-3">
-        <Form />
-      </div>
+    <div className="mt-3">
+      <Form />
     </div>
   );
 };

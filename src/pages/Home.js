@@ -101,7 +101,9 @@ function Home() {
   }
   return (
     <div className="timeline max-w-xl mx-auto">
-      <p className="text-center font-bold my-5">Latest Global News</p>
+      <p className="text-center font-bold my-5">
+        Latest Global News By The NewYork Times
+      </p>
 
       <div className="flex gap-4">
         <Select
