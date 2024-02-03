@@ -13,9 +13,15 @@ import { sectionOptions } from "./Home";
 import AlertDialog from "../components/AlertDialog";
 import { AnimationLoading } from "../components/Loading";
 
+const tips = [
+  "Login to get verified & to keep track of your articles",
+  "Login to like, comment, share the posts.",
+];
+
 function UploadPost() {
   const user = useValidUser();
   const [showDialog, setShowDialog] = useState(false);
+  const [randomTip, setRandomTip] = useState("");
   const [uploadUi, setUploadUi] = useState(true);
   const [form, setForm] = useState({
     title: null,
@@ -26,6 +32,8 @@ function UploadPost() {
     section: sectionOptions[0].value,
   });
   useEffect(() => {
+    const getRandomIndex = () => Math.floor(Math.random() * tips.length);
+    setRandomTip(tips[getRandomIndex()]);
     const uploadLoading = setTimeout(() => {
       setUploadUi(false);
     }, 3050);
@@ -77,9 +85,7 @@ function UploadPost() {
     return (
       <div className="w-full flex flex-col h-[70vh] items-center justify-center">
         <AnimationLoading animation={uploadLoad} />
-        <span className="opacity-75 text-center">
-          Tip: Login to get verified & to keep track of your articles
-        </span>
+        <span className="opacity-75 text-center">Tip: {randomTip}</span>
       </div>
     );
   return (

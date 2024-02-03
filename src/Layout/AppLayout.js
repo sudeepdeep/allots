@@ -1,23 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Logo from "../components/Logo";
 import { updatePosition, addUser } from "../utils/slice";
 import { store } from "../utils/store";
 import { MoveTop } from "../components/MoveTop";
 import Cookies from "js-cookie";
-import axios from "../utils/axios";
+import axios from "axios";
+import { AnimationLoading } from "../components/Loading";
+import loadingAnimation from "../assets/articles.json";
 
 function AppLayout() {
   const scrollPosition = useSelector((store) => store.ui.scrollPosition);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (Cookies.get("userId")) {
-      axios.get(`/user/${Cookies.get("userId")}/my-profile`).then((res) => {
-        dispatch(addUser(res.data.user));
-      });
+    if (Cookies.get("token") && Cookies.get("userId")) {
+      setLoading(true);
+
+      axios
+        .get(
+          `https://woid-backend.onrender.com/user/${Cookies.get(
+            "userId"
+          )}/my-profile`,
+          {
+            headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+          }
+        )
+        .then((res) => {
+          setLoading(false);
+          dispatch(addUser(res.data.user));
+        })
+        .catch((err) => {
+          setLoading(false);
+          navigate("/logout");
+        });
     }
 
     const handleScroll = () => {
@@ -31,6 +51,12 @@ function AppLayout() {
     };
   }, []);
 
+  if (loading)
+    return (
+      <div className="h-[100vh] bg-black flex justify-center items-center">
+        <AnimationLoading animation={loadingAnimation} />;
+      </div>
+    );
   return (
     <Provider store={store}>
       <div className="min-h-[100vh] h-auto bg-[#0D1117]">

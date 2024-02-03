@@ -40,9 +40,6 @@ const Profile = () => {
       </div>
     );
 
-  if (userStore.username.length === 0)
-    return <AnimationLoading animation={uploadLoad} />;
-
   return (
     <div className="md:max-w-md mx-auto">
       {!viewPage.edit && !viewPage.profile && (

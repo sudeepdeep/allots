@@ -1,5 +1,6 @@
 import Lottie from "lottie-react";
 import React from "react";
+import articleLoading from "../assets/articles.json";
 
 function Loading() {
   return (
@@ -120,7 +121,7 @@ export const AnimationLoading = ({
   return (
     <>
       <Lottie
-        animationData={animation}
+        animationData={animation ?? articleLoading}
         className={styles}
         loop={loop}
         autoplay={autoplay}

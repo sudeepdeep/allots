@@ -13,6 +13,7 @@ function Comment() {
   const navigate = useNavigate();
   const store = useSelector((store) => store.loggedInUser.userData);
   const { articleId } = useParams();
+  const [commentLoading, setCommentLoading] = useState(false);
   const [commentData, setCommentData] = useState({
     username: store.username,
     commentText: "",
@@ -40,6 +41,7 @@ function Comment() {
   }
 
   function handlePostComment() {
+    setCommentLoading(true);
     axios
       .post(`/article/post-comment/${articleId}`, { ...commentData })
       .then((res) => {
@@ -49,13 +51,22 @@ function Comment() {
           commentText: "",
         });
         queryClient.invalidateQueries("get-article");
+        setCommentLoading(false);
       })
-      .catch((err) => axiosErrorToast(err));
+      .catch((err) => {
+        setCommentLoading(false);
+        axiosErrorToast(err);
+      });
   }
 
   if (isLoading) return <AnimationLoading animation={articleLoading} />;
   return (
-    <div className="comment relative w-full min-h-[75vh] ">
+    <div className="comment relative md:max-w-md mx-auto w-full min-h-[75vh] ">
+      <span className="cursor-pointer" onClick={() => navigate(-1)}>
+        {"< Back"}
+      </span>
+      <br />
+      <br />
       <div className="h-[60vh] overflow-y-auto">
         {data?.comments.map((comment, index) => (
           <div
@@ -81,7 +92,12 @@ function Comment() {
               value={commentData.commentText}
             />
           </div>
-          <div className="cursor-pointer" onClick={handlePostComment}>
+          <div
+            className={`${
+              commentLoading ? "cursor-not-allowed" : "cursor-pointer"
+            }`}
+            onClick={handlePostComment}
+          >
             <SendIcon />
           </div>
         </div>
