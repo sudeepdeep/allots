@@ -10,6 +10,14 @@ function Helmet({ appTitle = false, description = false, favicon = false }) {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="icon" href={favicon} />
       <link rel="apple-touch-icon" href={favicon} />
+      <meta property="og:title" content={"snap news"} />
+      <meta
+        property="og:description"
+        content={"Your Hub for Instant News and Incident Reporting"}
+      />
+      <meta property="og:image" content={favicon} />
+      <meta property="og:url" content={"https://snapnews.vercel.app/"} />
+      <meta property="og:type" content="website" />
     </ReactHelmet>
   );
 }

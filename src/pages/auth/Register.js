@@ -7,14 +7,18 @@ import { Button } from "../../components/Button";
 import Logo from "../../components/Logo";
 import TextField from "../../components/TextField";
 import axios, { axiosErrorToast } from "../../utils/axios";
+import { toast } from "react-toastify";
+import { ShowOffIcon, ShowOnIcon } from "../../assets/Icons";
 
 function Register() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const existingUser = Cookies.get("token");
   const [userData, setUserData] = useState({
     username: "",
     password: "",
+    repassword: "",
     email: "",
   });
 
@@ -25,6 +29,9 @@ function Register() {
   }, [existingUser]);
 
   function handleRegister() {
+    if (userData.password !== userData.repassword) {
+      toast.error("passwords did not match");
+    }
     setLoading(true);
 
     axios
@@ -42,6 +49,10 @@ function Register() {
         setLoading(false);
         axiosErrorToast(err);
       });
+
+    function handleShowPassword() {
+      setShowPassword((prev) => !prev.password);
+    }
   }
   return (
     <>
@@ -89,13 +100,30 @@ function Register() {
                 password: e,
               })
             }
+            onIcon={<ShowOnIcon />}
+            offIcon={<ShowOffIcon />}
             value={userData.password}
           />
 
+          <TextField
+            name="re-password"
+            type="password"
+            title="Re-Enter Password"
+            onChange={(e) =>
+              setUserData({
+                ...userData,
+                repassword: e,
+              })
+            }
+            onIcon={<ShowOnIcon />}
+            offIcon={<ShowOffIcon />}
+            value={userData.repassword}
+          />
           <Button
             disabled={loading}
             text="Register"
             handleSubmit={handleRegister}
+            loading={loading}
           />
 
           <h4 className="font-normal mt-2 text-white">

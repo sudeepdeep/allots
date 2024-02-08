@@ -7,9 +7,9 @@ import { updatePosition, addUser } from "../utils/slice";
 import { store } from "../utils/store";
 import { MoveTop } from "../components/MoveTop";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { AnimationLoading } from "../components/Loading";
 import loadingAnimation from "../assets/articles.json";
+import axios from "../utils/axios";
 
 function AppLayout() {
   const scrollPosition = useSelector((store) => store.ui.scrollPosition);
@@ -22,14 +22,7 @@ function AppLayout() {
       setLoading(true);
 
       axios
-        .get(
-          `https://woid-backend.onrender.com/user/${Cookies.get(
-            "userId"
-          )}/my-profile`,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("token")}` },
-          }
-        )
+        .get(`/user/${Cookies.get("userId")}/my-profile`)
         .then((res) => {
           setLoading(false);
           dispatch(addUser(res.data.user));

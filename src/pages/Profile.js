@@ -1,18 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import uploadLoad from "../assets/articles.json";
 import signedOut from "../assets/logout.json";
 import { Button } from "../components/Button";
 import Form from "../components/Form";
 import { AnimationLoading } from "../components/Loading";
-import { useValidUser } from "../utils/useValidUser";
 import Cookies from "js-cookie";
 import { MailIcon } from "../assets/Icons";
+import ArticleFeed from "../components/ArticleFeed";
+import axios, { axiosErrorToast } from "../utils/axios";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 const Profile = () => {
-  const user = useValidUser();
   const userStore = useSelector((store) => store.loggedInUser.userData);
   const navigate = useNavigate();
+  const [articleData, setArticleData] = useState([]);
+
+  function handleGetUserArticles() {
+    axios
+      .get(`/article/articles/${userStore.username}`)
+      .then((res) => setArticleData(res.data))
+      .catch((err) => axiosErrorToast(err));
+  }
+
+  useEffect(() => {
+    if (userStore.username) {
+      handleGetUserArticles();
+    }
+  }, [userStore.username]);
+
+  function handleDelete(articleId) {
+    axios
+      .post(`/article/delete-article/${articleId}/${Cookies.get("userId")}`)
+      .then((res) => {
+        handleGetUserArticles();
+        toast.success("Article deleted successfully.");
+      })
+      .catch((err) => axiosErrorToast(err));
+  }
 
   const [viewPage, setViewPage] = useState({
     profile: false,
@@ -39,7 +64,6 @@ const Profile = () => {
         </span>
       </div>
     );
-
   return (
     <div className="md:max-w-md mx-auto">
       {!viewPage.edit && !viewPage.profile && (
@@ -58,6 +82,8 @@ const Profile = () => {
           <br />
           <br />
           <ViewProfile user={userStore} />
+
+          <ArticleFeed items={articleData} handleDelete={handleDelete} />
         </>
       )) ||
         (viewPage.edit && (

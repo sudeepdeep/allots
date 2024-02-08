@@ -1,15 +1,19 @@
 import React from "react";
 import { ViewProfile } from "./Profile";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import axios, { axiosErrorToast } from "../utils/axios";
 import { AnimationLoading } from "../components/Loading";
 import loadingAnimation from "../assets/articles.json";
 import ArticleFeed from "../components/ArticleFeed";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 function UserProfile() {
   const { username } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const { data, isLoading } = useQuery("user-data", () =>
     axios
       .get(`/user/${username}/user-profile`)
@@ -30,6 +34,16 @@ function UserProfile() {
         <AnimationLoading animation={loadingAnimation} />;
       </div>
     );
+
+  function handleDelete(articleId) {
+    axios
+      .post(`/article/delete-article/${articleId}/${Cookies.get("userId")}`)
+      .then((res) => {
+        queryClient.invalidateQueries("article-data");
+        toast.success("Article deleted successfully.");
+      })
+      .catch((err) => axiosErrorToast(err));
+  }
   return (
     <div className="max-w-md mx-auto">
       <span className="cursor-pointer" onClick={() => navigate(-1)}>
@@ -39,7 +53,7 @@ function UserProfile() {
       <br />
       <ViewProfile user={data} />
       <div className="mt-2">
-        <ArticleFeed items={articleData} />
+        <ArticleFeed items={articleData} handleDelete={handleDelete} />
       </div>
     </div>
   );

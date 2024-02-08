@@ -1,19 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import { dateConverter } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 import Interaction from "./Interaction";
 import Cookies from "js-cookie";
+import axios, { axiosErrorToast } from "../utils/axios";
+import { useQueryClient } from "react-query";
+import { DeleteIcon } from "../assets/Icons";
+import { useSelector } from "react-redux";
+import AlertDialog from "./AlertDialog";
+import { toast } from "react-toastify";
 
-function ArticleFeed({ items }) {
+function ArticleFeed({ items, handleDelete = false }) {
+  const [showDialog, setShowDialog] = useState(false);
+  const [articleId, setArticleId] = useState(null);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const user = useSelector((store) => store.loggedInUser.userData);
+
+  function handleDeletePost() {
+    axios
+      .post(`/article/delete-article/${articleId}/${Cookies.get("userId")}`)
+      .then((res) => {
+        queryClient.invalidateQueries("articles");
+        toast.success("Article deleted successfully.");
+      })
+      .catch((err) => axiosErrorToast(err));
+  }
+
+  function handleDeleteArticle() {
+    setShowDialog(true);
+  }
+  if (showDialog)
+    return (
+      <AlertDialog
+        title="Are you sure you want to delete?"
+        handleSubmit={() => handleDelete(articleId)}
+        setDilog={setShowDialog}
+      />
+    );
+
   return (
     <>
       <div className="timeline max-w-xl">
         <>
           {items?.map((post, feedIndex) => (
             <div>
-              <div className="postCard bg-[#010409] w-full h-auto  p-6 mb-2  rounded-md">
-                <div className="postTitle flex gap-1 items-center">
+              <div className="postCard bg-[#010409] relative w-full h-auto  p-6 mb-3  rounded-md">
+                {user.username === post.username && (
+                  <p
+                    className="cursor-pointer absolute w-[40px] h-[40px] top-0 hover:bg-[#C3073F] right-0 rounded-bl-xl flex justify-center items-center transition duration-300 ease-in-out"
+                    onClick={() => {
+                      setArticleId(post._id);
+                      handleDeleteArticle();
+                    }}
+                  >
+                    <DeleteIcon />
+                  </p>
+                )}
+
+                <div className="postTitle flex gap-1 items-center p-2">
                   <div className="displayPic w-[100px] h-[40px] cursor-pointer rounded-md border-[#0D1117] border-2 overflow-hidden">
                     <img
                       src={post?.coverUrl}
@@ -21,6 +66,7 @@ function ArticleFeed({ items }) {
                       className="h-full w-full object-cover"
                     />
                   </div>
+
                   <div className="userName font-semibold ml-2 text-white cursor-pointer">
                     {post?.title}
                     <span className="font-light flex items-center gap-2">

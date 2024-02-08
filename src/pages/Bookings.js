@@ -1,25 +1,44 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import articleLoading from "../assets/articles.json";
 import ArticleFeed from "../components/ArticleFeed";
 import { AnimationLoading } from "../components/Loading";
-import axios from "../utils/axios";
+import axios, { axiosErrorToast } from "../utils/axios";
 import { useLocation } from "../utils/useLocation";
+import Select from "../components/Select";
+import { sectionOptions } from "./Home";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Bookings = () => {
   const locs = useLocation();
+  const queryClient = useQueryClient();
 
   const [section, setSection] = useState("home");
+  const [data, setData] = useState(null);
 
-  const { data, isLoading } = useQuery(["articles", locs], () =>
-    axios
-      .get("/article", {
-        params: { lat: locs.latitude, lng: locs.longitude },
-      })
-      .then((res) => res.data)
+  const { data: articleData, isLoading } = useQuery(
+    ["articles", locs],
+    () =>
+      axios
+        .get("/article", {
+          params: { lat: locs.latitude, lng: locs.longitude },
+        })
+        .then((res) => res.data),
+    {
+      onSuccess: (data) => {
+        setData(data);
+      },
+    }
   );
 
   function handleSectionChange(e) {
+    if (e === "home") {
+      setData(articleData);
+    } else {
+      const filteredData = articleData.filter((item) => item.section === e);
+      setData(filteredData);
+    }
     setSection(e);
   }
 
@@ -46,10 +65,29 @@ const Bookings = () => {
         <AnimationLoading animation={articleLoading} />
       </>
     );
+
+  function handleDelete(articleId) {
+    axios
+      .post(`/article/delete-article/${articleId}/${Cookies.get("userId")}`)
+      .then((res) => {
+        queryClient.invalidateQueries("articles");
+        toast.success("Article deleted successfully.");
+      })
+      .catch((err) => axiosErrorToast(err));
+  }
   return (
     <div className="max-w-xl mx-auto">
-      <h2 className="text-center font-bold my-5">Local News</h2>
-      <ArticleFeed items={data} />
+      <h2 className="text-center font-bold my-5">
+        Local News By <br /> SNAPNEWS
+      </h2>
+
+      <Select
+        onChange={handleSectionChange}
+        options={sectionOptions}
+        title={"Section"}
+        value={section}
+      />
+      <ArticleFeed items={data} handleDelete={handleDelete} />
     </div>
   );
 };

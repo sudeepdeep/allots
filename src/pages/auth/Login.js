@@ -7,6 +7,7 @@ import { Button } from "../../components/Button";
 import Logo from "../../components/Logo";
 import TextField from "../../components/TextField";
 import axios, { axiosErrorToast } from "../../utils/axios";
+import { ShowOffIcon, ShowOnIcon } from "../../assets/Icons";
 function Login() {
   const existingUserCheck = Cookies.get("token");
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ function Login() {
         if (res.data.access_token) {
           Cookies.set("token", res.data.access_token);
           Cookies.set("userId", res.data.userId);
-          navigate("/");
+          window.location.href = "/";
         }
       })
       .catch((err) => {
@@ -60,8 +61,15 @@ function Login() {
           title="Enter Password"
           value={password}
           onChange={(e) => setPassword(e)}
+          onIcon={<ShowOnIcon />}
+          offIcon={<ShowOffIcon />}
         />
-        <Button disabled={loading} text={"Login"} handleSubmit={handleLogin} />
+        <Button
+          disabled={loading}
+          text={"Login"}
+          loading={loading}
+          handleSubmit={handleLogin}
+        />
         <p className="text-slate-400 text-center">or</p>
         <Button
           disabled={loading}
