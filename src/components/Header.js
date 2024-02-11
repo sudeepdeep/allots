@@ -3,23 +3,24 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ActivateExploreIcon,
-  ActivateProfileIcon,
   ActiveAdd,
   ActiveLocationIcon,
   Add,
   ExploreIcon,
   LocationIcon,
-  ProfileIcon,
 } from "../assets/Icons";
+import axios from "../utils/axios";
+import { assignUsers, clearUsers } from "../utils/slice";
 import ActiveStrip from "./ActiveStrip";
-import Logo from "./Logo";
-import { useSelector } from "react-redux";
 import HeaderProfile from "./HeaderProfile";
+import Logo from "./Logo";
 
 function Header({ scrollPosition }) {
   const location = useLocation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [path, setPath] = useState("");
   const userId = Cookies.get("userId");
@@ -62,11 +63,27 @@ function Header({ scrollPosition }) {
       activeIcon: <HeaderProfile active={true} />,
     },
   ];
+
+  function handleSearch(e) {
+    if (e) {
+      axios
+        .get(`/user/${Cookies.get("userId")}`, {
+          params: { search: e },
+        })
+        .then((res) => {
+          dispatch(assignUsers(res.data));
+        });
+    } else {
+      dispatch(clearUsers());
+    }
+  }
+
   return (
     <>
       <h2 className="text-xl text-white font-bold tracking-widest hidden md:block">
         <Logo />
       </h2>
+
       <div className="flex w-full justify-around">
         {menuLists.map((item, index) => (
           <div className="relative" key={item.path}>
@@ -89,7 +106,7 @@ function Header({ scrollPosition }) {
             {item.path === path && (
               <>
                 <div
-                  className={`relative bg-green-500 w-full ${
+                  className={`relative  w-full ${
                     scrollPosition > 60 ? "top-2" : "top-5"
                   } hidden md:block `}
                 >
@@ -99,7 +116,20 @@ function Header({ scrollPosition }) {
             )}
           </div>
         ))}
+        {Cookies.get("userId") && (
+          <>
+            <div className="text-white md:block hidden">
+              <input
+                type="text"
+                placeholder="search user"
+                className="bg-[#0D1117] w-[200px]"
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
+          </>
+        )}
       </div>
+
       <h2
         className="text-sm text-white font-thin tracking-widest hidden md:block cursor-pointer"
         onClick={() => navigate("login")}

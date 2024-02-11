@@ -3,7 +3,12 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Logo from "../components/Logo";
-import { updatePosition, addUser } from "../utils/slice";
+import {
+  updatePosition,
+  addUser,
+  clearUsers,
+  assignUsers,
+} from "../utils/slice";
 import { store } from "../utils/store";
 import { MoveTop } from "../components/MoveTop";
 import Cookies from "js-cookie";
@@ -16,6 +21,8 @@ function AppLayout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  const searchUsers = useSelector((store) => store.searchUsers.users);
 
   useEffect(() => {
     if (Cookies.get("token") && Cookies.get("userId")) {
@@ -50,12 +57,39 @@ function AppLayout() {
         <AnimationLoading animation={loadingAnimation} />;
       </div>
     );
+
+  function handleSearch(e) {
+    if (e) {
+      axios
+        .get(`/user/${Cookies.get("userId")}`, {
+          params: { search: e },
+        })
+        .then((res) => {
+          dispatch(assignUsers(res.data));
+        });
+    } else {
+      dispatch(clearUsers());
+    }
+  }
   return (
     <Provider store={store}>
       <div className="min-h-[100vh] h-auto bg-[#0D1117]">
         <div className="logo h-[60px] md:hidden flex justify-center items-center">
           <Logo />
         </div>
+        {Cookies.get("userId") && (
+          <>
+            <div className="text-white md:hidden w-full flex justify-center items-center">
+              <input
+                type="text"
+                placeholder="search user"
+                className="bg-[#0D1117] w-[200px]"
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
+          </>
+        )}
+
         <div
           className={`${
             scrollPosition > 60 ? "backdrop-blur-lg" : "bg-[#010409]"
@@ -69,6 +103,27 @@ function AppLayout() {
           <div className="h-full w-full p-[20px] md:pt-[100px] md:pb-[10px] pb-[100px] text-white">
             <Outlet />
           </div>
+          {searchUsers.length > 0 && (
+            <div className="max-h-[200px] backdrop-blur-md cursor-pointer h-auto w-[200px] overflow-x-hidden overflow-y-auto fixed  z-40 md:right-[155px] md:top-[70px]  top-[120px] md:mr-2 left-0 right-0 mx-auto">
+              {searchUsers?.map((user) => (
+                <>
+                  <div
+                    className="p-2 hover:bg-white text-white hover:text-black"
+                    onClick={() => {
+                      dispatch(clearUsers());
+                      window.open(
+                        `/user-profile/${user.user.username}`,
+                        "_blank"
+                      );
+                    }}
+                  >
+                    {user.user.username}
+                  </div>
+                  <div className="border-b-2 border-[#0D1117]"></div>
+                </>
+              ))}
+            </div>
+          )}
           {scrollPosition > 60 && (
             <div
               className="h-[200px] bottom-[-80px] fixed right-9 z-40 cursor-pointer"

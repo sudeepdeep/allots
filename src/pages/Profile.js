@@ -65,28 +65,14 @@ const Profile = () => {
       </div>
     );
   return (
-    <div className="md:max-w-md mx-auto">
-      {!viewPage.edit && !viewPage.profile && (
-        <>
-          <InitialDetails setViewPage={setViewPage} />
-        </>
-      )}
-      {(viewPage.profile && (
-        <>
-          <span
-            className="cursor-pointer"
-            onClick={() => setViewPage({ edit: false, profile: false })}
-          >
-            {"< Back"}
-          </span>
-          <br />
-          <br />
-          <ViewProfile user={userStore} />
-
-          <ArticleFeed items={articleData} handleDelete={handleDelete} />
-        </>
-      )) ||
-        (viewPage.edit && (
+    <div className="">
+      <div className="md:max-w-md mx-auto">
+        {!viewPage.edit && !viewPage.profile && (
+          <>
+            <InitialDetails setViewPage={setViewPage} />
+          </>
+        )}
+        {(viewPage.profile && (
           <>
             <span
               className="cursor-pointer"
@@ -94,9 +80,26 @@ const Profile = () => {
             >
               {"< Back"}
             </span>
-            <EditProfile setViewPage={setViewPage} />
+            <br />
+            <br />
+            <ViewProfile user={userStore} />
+            <div className="mt-2">
+              <ArticleFeed items={articleData} handleDelete={handleDelete} />
+            </div>
           </>
-        ))}
+        )) ||
+          (viewPage.edit && (
+            <>
+              <span
+                className="cursor-pointer"
+                onClick={() => setViewPage({ edit: false, profile: false })}
+              >
+                {"< Back"}
+              </span>
+              <EditProfile setViewPage={setViewPage} />
+            </>
+          ))}
+      </div>
     </div>
   );
 };
@@ -127,6 +130,10 @@ const InitialDetails = ({ setViewPage = false }) => {
       />
 
       <Button text={"Logout"} handleSubmit={() => navigate("/logout")} />
+
+      <h1 className="text-center text-slate-400 absolute bottom-[100px] left-0 right-0 mx-auto">
+        Developed By <br /> Sudeep kondabathula💜
+      </h1>
     </div>
   );
 };

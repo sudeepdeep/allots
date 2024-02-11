@@ -6,5 +6,6 @@ export const store = configureStore({
     user: reducers.user,
     ui: reducers.ui,
     loggedInUser: reducers.loggedInUser,
+    searchUsers: reducers.searchUsers,
   },
 });

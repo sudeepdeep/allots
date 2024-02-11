@@ -12,7 +12,9 @@ function HeaderProfile({ active = false }) {
             <img
               src={user.profileUrl}
               alt="profile"
-              className="profile w-[30px] h-[30px] rounded-full object-cover"
+              className={`profile w-[30px] h-[30px] ${
+                active && "border-2 border-[#c3073f]"
+              } rounded-full object-cover`}
             />
           </div>
           <div className="md:block hidden">

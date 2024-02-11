@@ -43,6 +43,21 @@ const loggedInUserSlice = createSlice({
   },
 });
 
+const searchSlice = createSlice({
+  name: "search",
+  initialState: {
+    users: [],
+  },
+  reducers: {
+    assignUsers: (state, action) => {
+      state.users = action.payload;
+    },
+    clearUsers: (state) => {
+      state.users = [];
+    },
+  },
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -78,8 +93,11 @@ export const { updatePosition, updateGeolocation } = uiSlice.actions;
 
 export const { addUser, clearUser, updateUser } = loggedInUserSlice.actions;
 
+export const { assignUsers, clearUsers } = searchSlice.actions;
+
 export const reducers = {
   ui: uiSlice.reducer,
   user: userSlice.reducer,
   loggedInUser: loggedInUserSlice.reducer,
+  searchUsers: searchSlice.reducer,
 };

@@ -87,7 +87,9 @@ const Bookings = () => {
         title={"Section"}
         value={section}
       />
-      <ArticleFeed items={data} handleDelete={handleDelete} />
+      <div className="mt-2">
+        <ArticleFeed items={data} handleDelete={handleDelete} />
+      </div>
     </div>
   );
 };
