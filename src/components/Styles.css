@@ -1,0 +1,25 @@
+.animate-star {
+  perspective: 1000px;
+  animation: zoom 4s infinite ease-in-out;
+  animation-delay: calc(random() * 5s);
+}
+
+@keyframes zoom {
+  0% {
+    opacity: 0;
+    transform: translateZ(-100px) scale(0.2);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateZ(-200px);
+  }
+  80% {
+    opacity: 1;
+    transform: translateZ(-800px);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateZ(-1000px);
+  }
+}

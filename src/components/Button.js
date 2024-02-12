@@ -6,17 +6,19 @@ export const Button = ({
   text = false,
   handleSubmit = false,
   loading = false,
+  sx = "",
 }) => {
+  console.log(sx);
   return (
     <div
       onClick={handleSubmit}
-      className={`p-3 text-center relative my-3 text-[#c3073f]   ${
+      className={`p-3 text-center relative my-3 flex items-center justify-center  ${
         disabled ? "cursor-wait" : "cursor-pointer"
-      }  hover:text-white hover:bg-[#c3073f] rounded-md transition duration-300 ease-in-out`}
+      }  text-white  hover:bg-[#c3073f] rounded-md transition duration-300 ease-in-out  ${sx}  `}
     >
       <button disabled={disabled}>{text ? text : "submit"}</button>
       {loading && (
-        <div className="absolute z-50 right-0 top-2">
+        <div className="absolute z-50 right-0 top-0">
           <AnimationLoading animation={buttonLoading} styles="w-[70px]" />
         </div>
       )}
