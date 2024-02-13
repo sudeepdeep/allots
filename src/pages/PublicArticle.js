@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import axios from "../utils/axios";
 import Lottie from "lottie-react";
-import articleLoading from "../assets/articles.json";
+import articleLoading from "../assets/loading.json";
 import { dateConverter } from "../utils/utils";
 
 function PublicArticle() {

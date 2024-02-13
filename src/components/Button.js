@@ -8,7 +8,6 @@ export const Button = ({
   loading = false,
   sx = "",
 }) => {
-  console.log(sx);
   return (
     <div
       onClick={handleSubmit}

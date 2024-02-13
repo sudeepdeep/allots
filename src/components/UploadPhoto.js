@@ -1,7 +1,7 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import Cookies from "js-cookie";
 import { useState } from "react";
-import articleLoading from "../assets/articles.json";
+import articleLoading from "../assets/loading.json";
 import axios, { axiosErrorToast } from "../utils/axios";
 import { AnimationLoading } from "./Loading";
 

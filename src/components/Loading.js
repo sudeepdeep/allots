@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import React from "react";
-import articleLoading from "../assets/articles.json";
+import articleLoading from "../assets/loading.json";
 
 function Loading() {
   return (

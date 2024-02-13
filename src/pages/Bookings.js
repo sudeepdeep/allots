@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import articleLoading from "../assets/articles.json";
+import articleLoading from "../assets/loading.json";
 import ArticleFeed from "../components/ArticleFeed";
 import { AnimationLoading } from "../components/Loading";
 import axios, { axiosErrorToast } from "../utils/axios";

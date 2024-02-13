@@ -102,7 +102,7 @@ function Home() {
   return (
     <div className="timeline max-w-xl mx-auto">
       <p className="text-center font-bold my-5">
-        Latest Global News By
+        Global News By
         <br /> The NewYork Times
       </p>
 

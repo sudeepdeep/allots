@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 import axios, { axiosErrorToast } from "../utils/axios";
 import { AnimationLoading } from "../components/Loading";
-import loadingAnimation from "../assets/articles.json";
+import loadingAnimation from "../assets/loading.json";
 import ArticleFeed from "../components/ArticleFeed";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";

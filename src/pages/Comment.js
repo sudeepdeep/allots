@@ -4,7 +4,7 @@ import TextField from "../components/TextField";
 import { useQuery, useQueryClient } from "react-query";
 import axios, { axiosErrorToast } from "../utils/axios";
 import { AnimationLoading } from "../components/Loading";
-import articleLoading from "../assets/articles.json";
+import articleLoading from "../assets/loading.json";
 import { SendIcon } from "../assets/Icons";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";

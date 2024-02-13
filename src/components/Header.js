@@ -37,6 +37,14 @@ function Header({ scrollPosition }) {
       icon: <ExploreIcon />,
       activeIcon: <ActivateExploreIcon />,
     },
+
+    {
+      title: "Local",
+      path: "/local-news",
+      icon: <LocationIcon />,
+      activeIcon: <ActiveLocationIcon />,
+    },
+
     // {
     //   title: "Inbox",
     //   path: "/inbox",
@@ -50,12 +58,7 @@ function Header({ scrollPosition }) {
       icon: <Add />,
       activeIcon: <ActiveAdd />,
     },
-    {
-      title: "Local",
-      path: "/local-news",
-      icon: <LocationIcon />,
-      activeIcon: <ActiveLocationIcon />,
-    },
+
     {
       title: "Profile",
       path: `/profile`,
@@ -91,7 +94,7 @@ function Header({ scrollPosition }) {
               {({ isActive }) => (
                 <>
                   <span
-                    className={`itemMenu w-full h-full flex gap-2  ${
+                    className={`itemMenu w-full h-full pt-2 flex gap-2  ${
                       !isActive ? "text-white" : "text-[#c3073f]"
                     }  uppercase tracking-widest w-[100%] cursor-pointer hover:text-[#c3073f]`}
                   >
@@ -107,7 +110,7 @@ function Header({ scrollPosition }) {
               <>
                 <div
                   className={`relative  w-full ${
-                    scrollPosition > 60 ? "top-2" : "top-5"
+                    scrollPosition > 60 ? "top-1" : "top-3"
                   } hidden md:block `}
                 >
                   <ActiveStrip />
@@ -134,20 +137,14 @@ function Header({ scrollPosition }) {
         className="text-sm text-white font-thin tracking-widest hidden md:block cursor-pointer"
         onClick={() => navigate("login")}
       >
-        {!userId ? (
-          "login"
+        {userStore.profileUrl ? (
+          <img
+            src={userStore.profileUrl}
+            className="w-[50px] h-[40px] rounded-full object-cover border-2 border-slate-400"
+            alt="profile"
+          />
         ) : (
-          <>
-            {userStore.profileUrl ? (
-              <img
-                src={userStore.profileUrl}
-                className="w-[50px] h-[40px] rounded-full object-cover border-2 border-slate-400"
-                alt="profile"
-              />
-            ) : (
-              <>{userStore?.username}</>
-            )}
-          </>
+          <>{userStore?.username}</>
         )}
       </h2>
     </>

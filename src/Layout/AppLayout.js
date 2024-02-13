@@ -13,7 +13,7 @@ import { store } from "../utils/store";
 import { MoveTop } from "../components/MoveTop";
 import Cookies from "js-cookie";
 import { AnimationLoading } from "../components/Loading";
-import loadingAnimation from "../assets/articles.json";
+import loadingAnimation from "../assets/loading.json";
 import axios from "../utils/axios";
 
 function AppLayout() {
@@ -126,7 +126,7 @@ function AppLayout() {
           )}
           {scrollPosition > 60 && (
             <div
-              className="h-[200px] bottom-[-80px] fixed right-9 z-40 cursor-pointer"
+              className=" top-[80vh] fixed right-9 z-40 cursor-pointer"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
