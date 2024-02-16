@@ -8,6 +8,7 @@ import loadingAnimation from "../assets/loading.json";
 import ArticleFeed from "../components/ArticleFeed";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import { MessageIcon } from "../assets/Icons";
 
 function UserProfile() {
   const { username } = useParams();
@@ -44,6 +45,13 @@ function UserProfile() {
       })
       .catch((err) => axiosErrorToast(err));
   }
+
+  function handleCheckConnection(userId) {
+    axios
+      .get(`/user/${Cookies.get("userId")}/${userId}/check-message-id`)
+      .then((res) => console.log(res.data));
+  }
+
   return (
     <div className="max-w-md mx-auto">
       <span className="cursor-pointer" onClick={() => navigate(-1)}>
@@ -52,6 +60,12 @@ function UserProfile() {
       <br />
       <br />
       <ViewProfile user={data} />
+      <div
+        onClick={() => handleCheckConnection(data._id)}
+        className="hover:bg-[#C3073F] bg-[#c3073fd0] transition duration-300 ease-in-out cursor-pointer w-full h-[50px] rounded-md flex items-center justify-center my-3"
+      >
+        Message <MessageIcon />
+      </div>
       <div className="mt-2">
         <ArticleFeed items={articleData} handleDelete={handleDelete} />
       </div>

@@ -6,7 +6,7 @@ import { Button } from "../components/Button";
 import Form from "../components/Form";
 import { AnimationLoading } from "../components/Loading";
 import Cookies from "js-cookie";
-import { MailIcon } from "../assets/Icons";
+import { MailIcon, MessageIcon } from "../assets/Icons";
 import ArticleFeed from "../components/ArticleFeed";
 import axios, { axiosErrorToast } from "../utils/axios";
 import { useQueryClient } from "react-query";

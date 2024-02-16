@@ -13,6 +13,7 @@ import Logout from "./pages/auth/Logout";
 import UserProfile from "./pages/UserProfile";
 import Comment from "./pages/Comment";
 import Error from "./pages/Error";
+import Messages from "./pages/Messages";
 
 const appRouter = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/comments/:articleId",
         element: <Comment />,
+      },
+      {
+        path: "/messages",
+        element: <Messages />,
       },
       {
         path: "/*",
