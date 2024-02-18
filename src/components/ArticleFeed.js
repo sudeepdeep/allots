@@ -5,7 +5,7 @@ import Interaction from "./Interaction";
 import Cookies from "js-cookie";
 import axios, { axiosErrorToast } from "../utils/axios";
 import { useQueryClient } from "react-query";
-import { DeleteIcon } from "../assets/Icons";
+import { DeleteIcon, MessageIcon } from "../assets/Icons";
 import { useSelector } from "react-redux";
 import AlertDialog from "./AlertDialog";
 import { toast } from "react-toastify";

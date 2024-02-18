@@ -9,6 +9,7 @@ import Select from "../components/Select";
 import { sectionOptions } from "./Home";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { QuestionIcon } from "../assets/Icons";
 
 const Bookings = () => {
   const locs = useLocation();
@@ -78,7 +79,16 @@ const Bookings = () => {
   return (
     <div className="max-w-xl mx-auto">
       <h2 className="text-center font-bold my-5">
-        Local News By <br /> SNAPNEWS
+        Local News By <br />{" "}
+        <span className="flex justify-center gap-2">
+          SNAPNEWS{" "}
+          <div
+            className="cursor-pointer"
+            title="Shows Local news around 50KM from your current location"
+          >
+            <QuestionIcon />
+          </div>
+        </span>
       </h2>
 
       <Select

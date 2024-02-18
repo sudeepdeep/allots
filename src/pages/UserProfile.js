@@ -10,14 +10,14 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { MessageIcon } from "../assets/Icons";
 
-function UserProfile() {
+function UserProfile({ handleBack = false }) {
   const { username } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery("user-data", () =>
     axios
-      .get(`/user/${username}/user-profile`)
+      .get(`/user/${!!username ? username : "snapnews"}/user-profile`)
       .then((res) => res.data)
       .catch((err) => axiosErrorToast(err))
   );
@@ -25,7 +25,7 @@ function UserProfile() {
     "article-data",
     () =>
       axios
-        .get(`/article/articles/${username}`)
+        .get(`/article/articles/${!!username ? username : "snapnews"}`)
         .then((res) => res.data)
         .catch((err) => axiosErrorToast(err))
   );
@@ -49,12 +49,19 @@ function UserProfile() {
   function handleCheckConnection(userId) {
     axios
       .get(`/user/${Cookies.get("userId")}/${userId}/check-message-id`)
-      .then((res) => console.log(res.data));
+      .then((res) => {
+        navigate(`/messages/${res.data.messageId}`);
+      });
   }
 
   return (
     <div className="max-w-md mx-auto">
-      <span className="cursor-pointer" onClick={() => navigate(-1)}>
+      <span
+        className="cursor-pointer"
+        onClick={() => {
+          handleBack ? handleBack() : navigate(-1);
+        }}
+      >
         {"< Back"}
       </span>
       <br />

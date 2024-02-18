@@ -13,7 +13,8 @@ import Logout from "./pages/auth/Logout";
 import UserProfile from "./pages/UserProfile";
 import Comment from "./pages/Comment";
 import Error from "./pages/Error";
-import Messages from "./pages/Messages";
+import Messages from "./pages/messages/Messages";
+import AllMessages from "./pages/messages/AllMessages";
 
 const appRouter = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/messages",
+        element: <AllMessages />,
+      },
+      {
+        path: "/messages/:id",
         element: <Messages />,
       },
       {

@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
-import { socket } from "../socket";
-import { useNavigate } from "react-router-dom";
+import { socket } from "../../socket";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Messages() {
+  const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    socket.emit("message", { name: "Hello world" });
-    socket.on("message", ({ name }) => console.log(name));
+    socket.emit("message", { messageId: id });
+    socket.on(id, ({ msgId }) => console.log(msgId));
     return () => {
-      socket.off("message");
+      socket.off(id);
     };
   }, []);
   return (
@@ -17,6 +18,7 @@ function Messages() {
         <div
           className="h-[70px] rounded-sm m-2 bg-red-400 cursor-pointer flex items-center p-3"
           onClick={() => navigate(`${item}`)}
+          key={item}
         >
           <div className="pp rounded-full bg-slate-400 w-[50px] h-[50px]"></div>
           <div className="ml-3">

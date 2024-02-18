@@ -6,17 +6,20 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ActivateExploreIcon,
+  ActivateMessageIcon,
   ActiveAdd,
   ActiveLocationIcon,
   Add,
   ExploreIcon,
   LocationIcon,
+  MessageIcon,
 } from "../assets/Icons";
 import axios from "../utils/axios";
 import { assignUsers, clearUsers } from "../utils/slice";
 import ActiveStrip from "./ActiveStrip";
 import HeaderProfile from "./HeaderProfile";
 import Logo from "./Logo";
+import AllMessages from "../pages/messages/AllMessages";
 
 function Header({ scrollPosition }) {
   const location = useLocation();
@@ -57,6 +60,12 @@ function Header({ scrollPosition }) {
       path: "/add",
       icon: <Add />,
       activeIcon: <ActiveAdd />,
+    },
+    {
+      title: "Messages",
+      path: "/messages",
+      icon: <MessageIcon />,
+      activeIcon: <ActivateMessageIcon />,
     },
 
     {
