@@ -10,14 +10,14 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { MessageIcon } from "../assets/Icons";
 
-function UserProfile({ handleBack = false }) {
+function UserProfile({ handleBack = false, name = false }) {
   const { username } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery("user-data", () =>
     axios
-      .get(`/user/${!!username ? username : "snapnews"}/user-profile`)
+      .get(`/user/${!!username ? username : name}/user-profile`)
       .then((res) => res.data)
       .catch((err) => axiosErrorToast(err))
   );

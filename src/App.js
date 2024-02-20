@@ -53,8 +53,8 @@ const appRouter = createBrowserRouter([
         element: <AllMessages />,
       },
       {
-        path: "/messages/:id",
-        element: <Messages />,
+        path: "/messages/:msgId",
+        element: <AllMessages />,
       },
       {
         path: "/*",
