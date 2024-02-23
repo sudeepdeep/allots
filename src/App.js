@@ -15,6 +15,7 @@ import Comment from "./pages/Comment";
 import Error from "./pages/Error";
 import Messages from "./pages/messages/Messages";
 import AllMessages from "./pages/messages/AllMessages";
+import AudioLogin from "./pages/auth/AudioLogin";
 
 const appRouter = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/audio-login",
+    element: <AudioLogin />,
   },
   {
     path: "/register",

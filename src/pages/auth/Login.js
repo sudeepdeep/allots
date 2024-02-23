@@ -76,6 +76,12 @@ function Login() {
             btnHeight={true}
             sx={"h-[40px] bg-[#c3073fd9]"}
           />
+          <p
+            onClick={() => navigate("/audio-login")}
+            className="cursor-pointer text-right text-slate-300"
+          >
+            Login with audio 🗣
+          </p>
         </div>
         <p className="text-slate-400 text-center mt-3">or</p>
         <Button

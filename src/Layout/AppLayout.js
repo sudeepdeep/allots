@@ -49,7 +49,7 @@ function AppLayout() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [Cookies.get("userId"), Cookies.get("token")]);
 
   if (loading)
     return (

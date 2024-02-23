@@ -75,11 +75,13 @@ function AllMessages() {
           <MessagesChat chat={roomData} />
           <SendMessages />
         </div>
-        <div
-          className={`flex-2 ${profileClick ? "block" : "hidden"} w-[30%] p-3`}
-        >
-          <UserProfile handleBack={onBackClick} name={user.username} />
-        </div>
+        {profileClick && (
+          <>
+            <div className={`flex-2 w-[30%] p-3`}>
+              <UserProfile handleBack={onBackClick} name={user.username} />
+            </div>
+          </>
+        )}
       </div>
       <div className="block md:hidden">
         {!profileClick && !msgClick && (
