@@ -67,7 +67,7 @@ function AudioLogin() {
   const [userAvailable, setUserAvailable] = useState(null);
 
   useEffect(() => {
-    usernameText(speech, setUsername);
+    usernameText(false, setUsername);
   }, []);
 
   useEffect(() => {
@@ -186,12 +186,13 @@ function AudioLogin() {
         )}
       </div>
       <div className="flex gap-2 items-center text-slate-500 absolute bottom-6">
-        Supports in{" "}
+        Supported in{" "}
         <img
           className="w-[18px] h-[18px]"
           src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png"
           alt="chrome"
         />
+        Browser
       </div>
     </div>
   );
