@@ -18,7 +18,6 @@ function handleString(str) {
 }
 
 function usernameText(speech, setUsername) {
-  console.log(speech);
   window.SpeechRecognition = window.webkitSpeechRecognition;
 
   // eslint-disable-next-line no-undef
@@ -67,7 +66,7 @@ function AudioLogin() {
   const [userAvailable, setUserAvailable] = useState(null);
 
   useEffect(() => {
-    usernameText(false, setUsername);
+    usernameText(speech, setUsername);
   }, []);
 
   useEffect(() => {
